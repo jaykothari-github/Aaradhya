@@ -1,0 +1,177 @@
+{% extends 'student/student-header.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+    <div id="hero" class="hero overlay subpage-hero contact-hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Register </h1>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="">Home</a></li>
+                  <li class="breadcrumb-item active">Register</li>
+                </ol>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+    </div>
+<div class="row mt-50">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator">Registration Form</h2>
+        <form action="" method="POST" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="name">First Name:</label>
+                      <input type="text" name="fname"  style="background-color: rgb(152, 235, 152);" placeholder="Enter Your First Name..." class="form-control" id="fname">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="email">Last Name:</label>
+                      <input type="text" name="lname" placeholder="Enter Your Last Name..." style="background-color: rgb(152, 235, 152);" class="form-control" id="">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="name">Email:</label>
+                      <input type="email" placeholder="Enter Your Email..." style="background-color: rgb(152, 235, 152);" class="form-control" id="fname">
+                      <!-- <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p> -->
+                        
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" placeholder="Enter your address..." class="form-control" style="background-color: rgb(152, 235, 152);" id="email">
+                    </div>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="name">Mobile number:</label>
+                      <input type="tel" name="mobile"  style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Mobile numner..." class="form-control" id="fname">
+                    </div>
+                </div>
+                
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="name">Parent's Mobile no:</label>
+                      <input type="tel" placeholder="Enter Your Parent's number..." style="background-color: rgb(152, 235, 152);" class="form-control" id="fname">
+                      <!-- <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p> -->
+                        
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" placeholder="Enter your address..." class="form-control" style="background-color: rgb(152, 235, 152);" id="email">
+                    </div>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="email">Address</label>
+                      <input type="text" class="form-control" style="background-color: rgb(152, 235, 152);" id="email">
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-20">
+                    <div class="form-group">
+                      <label for="name">Password:</label>
+                      <input type="password" class="form-control" id="password">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-20">
+                <button class="btn btn-green">Sign in</button>
+            </div>
+        </form>
+        
+        
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="name">First Name:</label>
+                      <input type="text" name="fname" value="{{member.fname}}" style="background-color: rgb(152, 235, 152);" placeholder="Enter Your First Name..." class="form-control" id="fname">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="email">Last Name:</label>
+                      <input type="text" name="lname" value="{{member.lname}}" placeholder="Enter Your Last Name..." style="background-color: rgb(152, 235, 152);" class="form-control" id="">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="name">Email:</label>
+                      <input type="email" disabled value="{{member.email}}" placeholder="Enter Your Email..." style="background-color: rgb(152, 235, 152);" class="form-control" id="fname">
+                      <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p>
+                        
+                    </div>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="email">Mobile:</label>
+                      <input type="text" name="mobile" value="{{member.mobile}}" placeholder="Enter Your Mobile..." style="background-color: rgb(152, 235, 152);" class="form-control" id="">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="name">Flat No:</label>
+                      <input type="text" value="{{member.flat_no}}" disabled style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Flat Number..." class="form-control" id="fname">
+                      <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                      <label for="email">Address:</label>
+                      <input type="text" name="address" value="{{member.address}}" placeholder="Enter Your Address..." style="background-color: rgb(152, 235, 152);" class="form-control" id="">
+                    </div>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="email">Document Submitted:</label>
+                      <input type="text" disabled placeholder="Enter Your Mobile..." value="{{member.doc}}" style="background-color: rgb(152, 235, 152);" class="form-control" id="">
+                      <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change Document type</p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="name">Document Number : </label><span>{% if member.verify %} <i class="fa fa-check" style="color: green"></i> {% else %} <i class="fa fa-close" style="color: red;"></i> {% endif %} </span>
+                      <input type="text" disabled value="{{member.doc_number}}" style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Flat Number..." class="form-control" id="fname">
+                      <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="email">Profile Pic</label>
+                      <input type="file" name="pic" placeholder="Enter Your Address..." style="background-color: rgb(152, 235, 152);" class="form-control" id="">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-green" type="submit"><i class="fa fa-edit"></i> Edit Profile </button>
+            </div>
+        </form>
+    </div>
+</div><!-- /.form -->
+<div class="container">
+    <h1 class="title"></h1>
+</div>
+<div class="container">
+    <h1 class="title"></h1>
+</div>
+
+{% endblock %}
