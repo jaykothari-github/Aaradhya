@@ -1,0 +1,55 @@
+{% extends 'student/student-header.html' %}
+{% load static %}
+{% block content %}
+
+<div id="hero" class="hero overlay subpage-hero contact-hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1> OTP verification </h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="">Home</a></li>
+              <li class="breadcrumb-item active">OTP verification</li>
+            </ol>
+        </div><!-- /.hero-text -->
+    </div><!-- /.hero-content -->
+</div>
+<div class="row mt-50">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator">OTP Verification</h2>
+        <form action="" method="POST" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="otp" value="{{otp}}">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="name">Email Sent on:</label>
+                      <input type="email" disabled value="{{email}}" name="email" required style="background-color: rgb(253, 253, 253);" placeholder="Email..." class="form-control" id="email">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="name">OTP:</label>
+                      <input type="number" name="otp" minlength="4" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your OTP..." class="form-control" id="mobile">
+                    </div>
+                </div>
+            </div><br>
+            
+            <div class="text-center mt-20">
+                <button class="btn btn-green" type="submit">Submit OTP</button>
+            </div>
+            
+        </form>
+        
+        
+      
+    </div>
+</div><!-- /.form -->
+<div class="container">
+    <h1 class="title"></h1>
+</div>
+<div class="container">
+    <h1 class="title"></h1>
+</div>
+
+
+{% endblock %}

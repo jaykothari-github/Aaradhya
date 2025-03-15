@@ -13,7 +13,7 @@ class Student(models.Model):
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    age = models.IntegerField()
+    birth_date = models.DateField(blank=True, null=True)
     email = models.EmailField(unique=True)
     mobile = models.CharField(max_length=10)
     parent_mobile = models.CharField(max_length=10)
@@ -22,7 +22,8 @@ class Student(models.Model):
     password = models.CharField(max_length=30)
     verified = models.BooleanField(default=False)
     aadhar = models.CharField(max_length=12)
-    aadhar_image = models.FileField(upload_to='aadhar/')
+    aadhar_image = models.FileField(upload_to='aadhar/', blank=True, null=True)
+    profile_qr = models.FileField(upload_to='profile_qr/',default='profile_qr/default.png')
     profile_image = models.FileField(upload_to='profile/', default='profile/default.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
 
