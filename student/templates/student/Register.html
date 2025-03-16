@@ -17,24 +17,27 @@
 <div class="row mt-50">
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator">Registration Form</h2>
+        {% if msg %}
+        <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+        {% endif %}
         <form action="{% url 'register' %}" method="POST" class="form" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="name">First Name:</label>
+                      <label for="name">First Name: <span style="color: red;">*</span> </label>
                       <input type="text" name="fname" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your First Name..." class="form-control" id="fname">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="email">Last Name:</label>
+                      <label for="email">Last Name:<span style="color: red;">*</span></label>
                       <input type="text" name="lname" required placeholder="Enter Your Last Name..." style="background-color: rgb(152, 235, 152);" class="form-control" id="">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="name">Birth date:</label>
+                      <label for="name">Birth date:<span style="color: red;">*</span></label>
                       <input type="date" name="bday" required placeholder="Enter Your Birthday..." style="background-color: rgb(152, 235, 152);" class="form-control" id="bday">
                       <!-- <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p> -->
                         
@@ -42,7 +45,7 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="form-group">
-                      <label for="address">Address</label>
+                      <label for="address">Address: <span style="color: red;">*</span></label>
                       <input type="text" name="address" placeholder="Enter your address..." required class="form-control" style="background-color: rgb(152, 235, 152);" id="email">
                     </div>
                 </div>
@@ -50,26 +53,26 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="name">Email address:</label>
+                      <label for="name">Email address: <span style="color: red;">*</span></label>
                       <input type="email" name="email" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Email..." class="form-control" id="email">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="name">Mobile number:</label>
+                      <label for="name">Mobile number: <span style="color: red;">*</span></label>
                       <input type="tel" name="mobile" minlength="10" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Mobile numner..." class="form-control" id="mobile">
                     </div>
                 </div>
                 
                 <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="name">Parent's Mobile no:</label>
+                      <label for="name">Parent's Mobile no: <span style="color: red;">*</span></label>
                       <input type="tel" name="pmobile" minlength="10" required placeholder="Enter Your Parent's number..." style="background-color: rgb(152, 235, 152);" class="form-control" id="mobile">
                       <!-- <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p> -->
                         
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                     <div class="form-group">
                       <label for="password">Password</label>
                       <input type="password" name="password" minlength="8" required placeholder="Enter your strong Password..." class="form-control" style="background-color: rgb(152, 235, 152);" id="password">
@@ -80,30 +83,32 @@
                       <label for="password">Confirm Password</label>
                       <input type="password" name="cpassword" minlength="8" required placeholder="Confirm your Password..." class="form-control" style="background-color: rgb(152, 235, 152);" id="password">
                     </div>
-                </div>
+                </div> -->
             </div><br>
             <div class="row">
-              <div class="col-sm-4">
+              <!-- <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Profile pic</label>
-                    <input type="file" name="profile_pic"  style="background-color: rgb(152, 235, 152);" placeholder="Upload your pic..." class="form-control" id="pic">
+                    <input type="file" name="profile_pic"  style="background-color: rgb(152, 235, 152);" placeholder="Upload your pic..." class="form-control" id="profile_pic">
+                    <p style="color: red; font-size: smaller; margin-left: 30px;">*Upload document less than 2 MB</p>
+                    
                   </div>
-              </div>
-              <div class="col-sm-4">
+              </div> -->
+              <div class="col-sm-6 center">
                   <div class="form-group">
-                    <label for="name">Aadhaar no:</label>
+                    <label for="name">Aadhaar no: <span style="color: red;">*</span></label>
                     <input type="tel" name="aadhar" minlength="12" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Aadhaar numner..." class="form-control" id="mobile">
                   </div>
               </div>
               
-              <div class="col-sm-4">
+              <!-- <div class="col-sm-4">
                   <div class="form-group">
                     <label for="name">Aadhar Photo:</label>
-                    <input type="file" name="aadhaar_pic" placeholder="Enter Your ..." style="background-color: rgb(152, 235, 152);" class="form-control" id="mobile">
-                    <!-- <p style="color: red; font-size: smaller; margin-left: 30px;">*You can't change this field</p> -->
+                    <input type="file" name="aadhar_pic" placeholder="Enter Your ..." style="background-color: rgb(152, 235, 152);" class="form-control" id="aadhar_pic">
+                    <p style="color: red; font-size: smaller; margin-left: 30px;">*Upload document less than 2 MB</p>
                       
                   </div>
-              </div>
+              </div> -->
               
           </div><br>
             <div class="text-center mt-20">
@@ -124,5 +129,25 @@
 <div class="container">
     <h1 class="title"></h1>
 </div>
+
+<script>
+  const profile_pic = document.getElementById("profile_pic");
+
+profile_pic.onchange = function() {
+    if(this.files[0].size > 2097152) {
+       alert("File is too big!");
+       this.value = "";
+    }
+};
+
+const aadhar_pic = document.getElementById("aadhar_pic");
+
+aadhar_pic.onchange = function() {
+    if(this.files[0].size > 2097152) {
+       alert("File is too big!");
+       this.value = "";
+    }
+};
+</script>
 
 {% endblock %}
