@@ -23,8 +23,8 @@ class Student(models.Model):
     verified = models.BooleanField(default=False)
     aadhar = models.CharField(max_length=12)
     aadhar_image = models.FileField(upload_to='aadhar/', blank=True, null=True)
-    profile_qr = models.FileField(upload_to='profile_qr/',default='profile_qr/default.png')
-    profile_image = models.FileField(upload_to='profile/', default='profile/default.jpg')
+    profile_qr = models.FileField(upload_to='profile_qr/',default='default/qr.png')
+    profile_image = models.FileField(upload_to='profile/', default='default/profile.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
