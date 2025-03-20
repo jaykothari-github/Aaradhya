@@ -94,3 +94,18 @@ def otp(request):
         else:
             return render(request, 'student/otp.html', {'email':email, 'otp':sys_otp,'msg':'Invalid OTP!! please Enter correct OTP!!'})
     return render(request, 'student/register.html')
+
+def login(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        if Student.objects.filter(email=email).exists():
+            student = Student.objects.get(email=email)
+            if student.password == password:
+                request.session['email'] = student.email
+                return render(request, 'student/index.html', {'student':student})
+            else:
+                return render(request, 'student/login.html', {'msg':'Invalid Password!! Please try again!!'})
+        else:
+            return render(request, 'student/login.html', {'msg':'Email not found!! Please try again!!'})
+    return render(request, 'student/login.html')

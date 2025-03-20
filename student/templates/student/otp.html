@@ -13,7 +13,7 @@
         </div><!-- /.hero-text -->
     </div><!-- /.hero-content -->
 </div>
-<div class="row mt-50">
+<div class="row mt-10">
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center heading-separator" style="color: black;">OTP Verification</h2>
         {% if msg %}
@@ -28,7 +28,7 @@
                       <label for="name">Email Sent on:</label>
                       <input type="email" readonly value="{{email}}" name="email" required style="background-color: rgb(253, 253, 253);" placeholder="Email..." class="form-control" id="email">
                     </div>
-                </div>
+                </div><br>
                 <div class="col-sm-6">
                     <div class="form-group">
                       <label for="name">OTP:</label>
@@ -40,11 +40,7 @@
             <div class="text-center mt-20">
                 <button class="btn btn-green" type="submit">Submit OTP</button>
             </div>
-            
-        </form>
-        
-        
-      
+        </form>  
     </div>
 </div><!-- /.form -->
 <div class="container">

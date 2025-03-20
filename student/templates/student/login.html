@@ -14,8 +14,38 @@
     </div><!-- /.hero-content -->
 </div><br><br><br>
 
-{% if msg %}
-<h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
-{% endif %}
+<div class="row mt-10">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator" style="color: black;">Login</h2>
+        {% if msg %}
+        <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+        {% endif %}
+        <form action="{% url 'login' %}" method="POST" class="form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="name">Email:</label>
+                      <input type="email" name="email" required style="background-color: rgb(152, 235, 152);" placeholder="Email..." class="form-control" id="email">
+                    </div>
+                </div><br>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="name">Password:</label>
+                      <input type="password" name="password" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Password..." class="form-control" id="password">
+                    </div>
+                </div>
+            </div><br>
+            
+            <div class="text-center mt-20">
+                <button class="btn btn-green" type="submit">Login</button>
+            </div>
+            
+        </form>
+      
+    </div>
+</div><br><br><br>
+<br>
+
 
 {% endblock %}
