@@ -252,7 +252,7 @@
 		height: 2px;
 		width: 22px;
 		display: block;
-		background-color: #26272d;
+		background-color: #ffffff;
 		-webkit-transition: all 0.3s;
 		-moz-transition: all 0.3s;
 		-ms-transition: all 0.3s;
@@ -304,7 +304,7 @@
 	}
 
 	.slicknav_nav {
-		background-color: #f5f5f8;
+		background-color: #38383ae8;
 		padding-left: 0;
 		list-style: none;
 		position: fixed;
@@ -350,7 +350,7 @@
 
 	.slicknav_nav > li a {
 		display: inline-block;
-		color: #26272d;
+		color: #f1f1f1;
 		font-size: 14px;
 	}
 

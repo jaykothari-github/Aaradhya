@@ -626,6 +626,7 @@ html, body {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+    margin-top: 2%;
 }
 
 /* Background colors */
@@ -955,6 +956,7 @@ html, body {
 .section-map-feature {
     padding-top: 250px;
     background: #071021 url(../img/map.png) no-repeat top center / cover; 
+    background-position: center;
 }
 
 .section-map-feature h2 {

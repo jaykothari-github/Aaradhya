@@ -6,6 +6,7 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 import qrcode
 import os
+from . import messages
 
 # Create your views here.
 
@@ -16,30 +17,36 @@ def register(request):
     if request.method == "POST":
 
         if Student.objects.filter(email=request.POST['email']).exists():
-            return render(request, 'student/register.html', {'msg':'Email already exists!! Please try with another email!!'})
+            student = Student.objects.get(email=request.POST['email'])
+            if student.is_verified:
+                return render(request, 'student/register.html', {'msg':'Email already exists!! Please try with another email!!'})
+            else:
+                
+                return render(request, 'student/register.html', {'msg':'Email already exists!! Please verify your email!!'})
         else:
-            Student.objects.create(
-                first_name = request.POST['fname'],
-                last_name = request.POST['lname'],
-                birth_date = request.POST['bday'],
-                email = request.POST['email'],
-                mobile = request.POST['mobile'],
-                parent_mobile = request.POST['pmobile'],
-                address = request.POST['address'],
-                password = ''.join(choices(string.ascii_letters + string.digits, k=8)),
-                aadhar = request.POST['aadhar']
-                )
+           
             email = request.POST['email']
             otp = randrange(1000,9999)
             subject = 'OTP for registration'
-            message = f"""Your OTP is {otp}"""
+            otp_msg = messages.otp_msg.format(fname=request.POST['fname'] , lname=request.POST['lname'], otp=otp)
             try:
-                send_mail(subject, message, settings.EMAIL_HOST_USER, [email])
-                # context['result'] = 'Email sent successfully'
+                send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
+                msg = 'OTP sent to your email!!'
+                Student.objects.create(
+                    first_name = request.POST['fname'],
+                    last_name = request.POST['lname'],
+                    birth_date = request.POST['bday'],
+                    email = request.POST['email'],
+                    mobile = request.POST['mobile'],
+                    parent_mobile = request.POST['pmobile'],
+                    address = request.POST['address'],
+                    password = ''.join(choices(string.ascii_letters + string.digits, k=8)),
+                    aadhar = request.POST['aadhar']
+                    )
             except Exception as e:
                 msg = f'Error sending email: {e}'
 
-            return render(request, 'student/otp.html', {'email':email, 'otp':otp})
+            return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
 
 
 
@@ -65,21 +72,10 @@ def otp(request):
             
             ## url save in Database 
             student.profile_qr = 'profile_qr/' + f"{student.first_name}_{student.last_name}" + '.png'
-            student.is_verified = True
+            student.verified = True
             student.save()
 
-            msg = f"""Hi {student.first_name} {student.last_name}!!,
-    Your QR code is generated. Please find the attachment below. 
-
-    Your account details are:
-    Email: {student.email}
-    Password: {student.password}
-
-    "please keep your password safe and do not share with anyone"
-    
-    Thanks & Regards,
-    Aaradhya group
-    """
+            msg = messages.welcome_msg.format(student=student)
             with open(img_path, 'rb') as f:
                 msg = EmailMultiAlternatives("Welcome to Aaradhya group", msg, settings.EMAIL_HOST_USER, [student.email])
                 msg.attach(f'{student.first_name}.png', f.read(), 'image/png')
