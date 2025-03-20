@@ -2,7 +2,7 @@
 
 otp_msg = """Hi {fname} {lname}!!,
 
-We are please to welcome you to Aaradhya group. Your OTP for registration is "{otp}".
+We are pleased to welcome you to Aaradhya group. Your OTP for registration is "{otp}".
 
 Please enter this OTP to complete your registration.
 

@@ -16,18 +16,26 @@ def index(request):
 def register(request):
     if request.method == "POST":
 
-        if Student.objects.filter(email=request.POST['email']).exists():
-            student = Student.objects.get(email=request.POST['email'])
-            if student.is_verified:
+        email = request.POST['email']
+        if Student.objects.filter(email=email).exists():
+            student = Student.objects.get(email=email)
+            if student.verified:
                 return render(request, 'student/register.html', {'msg':'Email already exists!! Please try with another email!!'})
             else:
-                
-                return render(request, 'student/register.html', {'msg':'Email already exists!! Please verify your email!!'})
+                otp = randrange(1000,9999)
+                subject = 'OTP For Registration'
+                otp_msg = messages.otp_msg.format(fname=student.first_name , lname=student.last_name , otp=otp)
+                try:
+                    send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
+                    msg = 'Email already register!! Please verify your OTP!!'
+                    
+                except Exception as e:
+                    msg = f'Error sending email: {e}'
+                return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
         else:
            
-            email = request.POST['email']
             otp = randrange(1000,9999)
-            subject = 'OTP for registration'
+            subject = 'OTP For Registration'
             otp_msg = messages.otp_msg.format(fname=request.POST['fname'] , lname=request.POST['lname'], otp=otp)
             try:
                 send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
@@ -49,11 +57,9 @@ def register(request):
             return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
 
 
-
         # aadhar_image = request.FILES['aadhar_image']
         # profile_qr = request.FILES['profile_qr']
         # profile_image = request.FILES['profile_image']
-        return render(request, 'student/register.html')
     return render(request, 'student/register.html')
 
 
@@ -75,13 +81,16 @@ def otp(request):
             student.verified = True
             student.save()
 
+            ## Email body msg
             msg = messages.welcome_msg.format(student=student)
+
+            ## Email with attachment
             with open(img_path, 'rb') as f:
                 msg = EmailMultiAlternatives("Welcome to Aaradhya group", msg, settings.EMAIL_HOST_USER, [student.email])
-                msg.attach(f'{student.first_name}.png', f.read(), 'image/png')
+                msg.attach(f'{student.first_name}_{student.last_name}.png', f.read(), 'image/png')
                 msg.send()
 
             return render(request, 'student/login.html',{'msg':'Email Verified!! Please Complete your profile by login!!'})
         else:
             return render(request, 'student/otp.html', {'email':email, 'otp':sys_otp,'msg':'Invalid OTP!! please Enter correct OTP!!'})
-    # return render(request, 'student/otp.html',{'msg':'OTP verification'})
+    return render(request, 'student/register.html')
