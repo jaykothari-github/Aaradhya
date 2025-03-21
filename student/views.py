@@ -19,53 +19,57 @@ def index(request):
         return render(request, 'student/index.html')
 
 def register(request):
-    if request.method == "POST":
-
-        email = request.POST['email']
-        if Student.objects.filter(email=email).exists():
-            student = Student.objects.get(email=email)
-            if student.verified:
-                return render(request, 'student/register.html', {'msg':'Email already exists!! Please try with another email!!'})
+    try:
+        email = request.session['email']
+        student = Student.objects.get(email=email)
+        return render(request, 'student/index.html', {'student':student})
+    except:
+        if request.method == "POST":
+            email = request.POST['email']
+            if Student.objects.filter(email=email).exists():
+                student = Student.objects.get(email=email)
+                if student.verified:
+                    return render(request, 'student/register.html', {'msg':'Email already exists!! Please try with another email!!'})
+                else:
+                    otp = randrange(1000,9999)
+                    subject = 'OTP For Registration'
+                    otp_msg = messages.otp_msg.format(fname=student.first_name , lname=student.last_name , otp=otp)
+                    try:
+                        send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
+                        msg = 'Email already register!! Please verify your OTP!!'
+                        
+                    except Exception as e:
+                        msg = f'Error sending email: {e}'
+                    return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
             else:
+            
                 otp = randrange(1000,9999)
                 subject = 'OTP For Registration'
-                otp_msg = messages.otp_msg.format(fname=student.first_name , lname=student.last_name , otp=otp)
+                otp_msg = messages.otp_msg.format(fname=request.POST['fname'] , lname=request.POST['lname'], otp=otp)
                 try:
                     send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
-                    msg = 'Email already register!! Please verify your OTP!!'
-                    
+                    msg = 'OTP sent to your email!!'
+                    Student.objects.create(
+                        first_name = request.POST['fname'],
+                        last_name = request.POST['lname'],
+                        birth_date = request.POST['bday'],
+                        email = request.POST['email'],
+                        mobile = request.POST['mobile'],
+                        parent_mobile = request.POST['pmobile'],
+                        address = request.POST['address'],
+                        password = ''.join(choices(string.ascii_letters + string.digits, k=8)),
+                        aadhar = request.POST['aadhar']
+                        )
                 except Exception as e:
                     msg = f'Error sending email: {e}'
+
                 return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
-        else:
-           
-            otp = randrange(1000,9999)
-            subject = 'OTP For Registration'
-            otp_msg = messages.otp_msg.format(fname=request.POST['fname'] , lname=request.POST['lname'], otp=otp)
-            try:
-                send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
-                msg = 'OTP sent to your email!!'
-                Student.objects.create(
-                    first_name = request.POST['fname'],
-                    last_name = request.POST['lname'],
-                    birth_date = request.POST['bday'],
-                    email = request.POST['email'],
-                    mobile = request.POST['mobile'],
-                    parent_mobile = request.POST['pmobile'],
-                    address = request.POST['address'],
-                    password = ''.join(choices(string.ascii_letters + string.digits, k=8)),
-                    aadhar = request.POST['aadhar']
-                    )
-            except Exception as e:
-                msg = f'Error sending email: {e}'
-
-            return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
 
 
-        # aadhar_image = request.FILES['aadhar_image']
-        # profile_qr = request.FILES['profile_qr']
-        # profile_image = request.FILES['profile_image']
-    return render(request, 'student/register.html')
+            # aadhar_image = request.FILES['aadhar_image']
+            # profile_qr = request.FILES['profile_qr']
+            # profile_image = request.FILES['profile_image']
+        return render(request, 'student/register.html')
 
 
 def otp(request):
@@ -77,7 +81,7 @@ def otp(request):
             student  = Student.objects.get(email=email)
             
             ## QR code generate and save in folder
-            img = qrcode.make(f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.id}')
+            img = qrcode.make(f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.email}')
             img_path = os.path.join(settings.BASE_DIR,'media') + '/profile_qr/' + f"{student.first_name}_{student.last_name}" + '.png'
             img.save(img_path)
             
@@ -101,19 +105,26 @@ def otp(request):
     return render(request, 'student/register.html')
 
 def login(request):
-    if request.method == "POST":
-        email = request.POST['email']
-        password = request.POST['password']
-        if Student.objects.filter(email=email).exists():
-            student = Student.objects.get(email=email)
-            if student.password == password:
-                request.session['email'] = student.email
-                return render(request, 'student/index.html', {'student':student})
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        return render(request, 'student/index.html', {'student':student})
+    except:
+        if request.method == "POST":
+            email = request.POST['email']
+            password = request.POST['password']
+            if Student.objects.filter(email=email).exists():
+                student = Student.objects.get(email=email)
+                if student.password == password:
+                    if student.password_reset:
+                        request.session['email'] = student.email
+                        return render(request, 'student/index.html', {'student':student})
+                    else:
+                        return render(request, 'student/password_reset.html', { 'student':student ,'msg':'Please reset your password!! then complete your profile!!'})
+                else:
+                    return render(request, 'student/login.html', {'msg':'Invalid Password!! Please try again!!'})
             else:
-                return render(request, 'student/login.html', {'msg':'Invalid Password!! Please try again!!'})
-        else:
-            return render(request, 'student/login.html', {'msg':'Email not found!! Please try again!!'})
-    return render(request, 'student/login.html')
+                return render(request, 'student/login.html', {'msg':'Email not found!! Please try again!!'})
+        return render(request, 'student/login.html')
 
 def logout(request):
     try:
@@ -129,3 +140,18 @@ def icard_profile(request):
         return render(request, 'student/icard_profile.html', {'student':student})
     except:
         return render(request, 'student/icard_profile.html', {'msg':'Invalid data!! Please try again!!'})
+    
+def password_reset(request):
+    if request.method == "POST":
+        password = request.POST['password']
+        cpassword = request.POST['cpassword']
+        student = Student.objects.get(email=request.POST['email'])
+        if password != cpassword:
+            return render(request, 'student/password_reset.html', {'msg':'Password not matched!! Please try again!!', 'student':student})
+        student.password = password
+        student.password_reset = True
+        student.save()
+        
+        return render(request, 'student/login.html', {'msg':'Password reset successfully!! Please login with new password!!'})
+    
+    return render(request, 'student/login.html')

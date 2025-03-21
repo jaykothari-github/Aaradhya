@@ -20,6 +20,7 @@ class Student(models.Model):
     role = models.CharField(max_length=10, choices=doc_choice, default='Student')
     address = models.TextField()
     password = models.CharField(max_length=30)
+    password_reset = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
     aadhar = models.CharField(max_length=12)
     aadhar_image = models.FileField(upload_to='aadhar/', blank=True, null=True)

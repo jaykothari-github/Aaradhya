@@ -8,8 +8,12 @@
             <div class="hero-text">
                 <h1>Your Garba story begins from here.</h1>
                 <p>Get Register with Surat's one of best garba classes</p>
+                {% if request.session.email %}
+                <a href="" class="btn btn-border">Profile</a>
+                {% else %}
                 <a href="{% url 'register' %}" class="btn btn-border">Register</a>
                 <a href="{% url 'login' %}" class="btn btn-border">Login</a>
+                {% endif %}
             </div><!-- /.hero-text -->
         </div><!-- /.hero-content -->
     </div><!-- /.hero -->
