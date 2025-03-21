@@ -1,0 +1,85 @@
+{% extends 'student/student-header.html' %}
+{% load static %}
+{% block content %}
+
+<div id="hero" class="hero overlay subpage-hero contact-hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1> Id-Card </h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <li class="breadcrumb-item active">id-card</li>
+            </ol>
+        </div><!-- /.hero-text -->
+    </div><!-- /.hero-content -->
+</div>
+
+<style>
+    .image-container {
+      width: 100%;   /* Full width of the container */
+      height: 300px; /* Set a fixed height or percentage of the container */
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;        /* Make image fill the width */
+      height: 100%;       /* Make image fill the height */
+      object-fit: cover;  /* Ensure the image covers the container */
+    }
+    .list-group {
+      text-align: center; /* Center all list items' text */
+    }
+  </style>
+
+<div class="row mt-10">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator" style="color: black; margin-top: 10%;">ID-Card</h2>
+        
+        {% if msg %}
+        <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+        <p class="text-center heading-separator" style="color: red;">Don't try to be oversmart!! you are under surveillance </p>
+        {% endif %}
+
+        {% if student %}
+        <div class="row">
+            <div class="col-sm-12" style="display: flex;
+            justify-content: center;  /* Centers content horizontally */
+            align-items: center;      /* Centers content vertically */">
+
+                <div class="card" style="width: 30rem;">
+                    <div class="image-container">
+                        <img src="{{student.profile_image.url}}" alt="Responsive Image">
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">{{student.first_name}} {{student.last_name}}</li>
+                      <li class="list-group-item">Fees</li>
+                      <li class="list-group-item">profile completed</li>
+                      <li class="list-group-item">Aadhar verified</li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">Card link</a> <br>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+
+                    <div class="image-container">
+                        <img src="{{student.profile_qr.url}}" alt="Responsive Image">
+                    </div>
+                </div>  
+
+            </div><br>
+            <!-- <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="name">OTP:</label>
+                  <input type="number" name="user_otp" minlength="4" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your OTP..." class="form-control" id="mobile">
+                </div>
+            </div> -->
+        </div><br>
+        {% endif %}
+
+
+        
+    </div>
+</div>
+
+{% endblock %}

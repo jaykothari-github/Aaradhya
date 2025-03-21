@@ -11,7 +11,12 @@ from . import messages
 # Create your views here.
 
 def index(request):
-    return render(request, 'student/index.html')
+    try:
+        email = request.session['email']
+        student = Student.objects.get(email=email)
+        return render(request, 'student/index.html', {'student':student})
+    except:
+        return render(request, 'student/index.html')
 
 def register(request):
     if request.method == "POST":
@@ -72,7 +77,7 @@ def otp(request):
             student  = Student.objects.get(email=email)
             
             ## QR code generate and save in folder
-            img = qrcode.make(f'http://127.0.0.1:8000/qr/?id={student.id}')
+            img = qrcode.make(f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.id}')
             img_path = os.path.join(settings.BASE_DIR,'media') + '/profile_qr/' + f"{student.first_name}_{student.last_name}" + '.png'
             img.save(img_path)
             
@@ -109,3 +114,18 @@ def login(request):
         else:
             return render(request, 'student/login.html', {'msg':'Email not found!! Please try again!!'})
     return render(request, 'student/login.html')
+
+def logout(request):
+    try:
+        del request.session['email']
+    except:
+        pass
+    return render(request, 'student/index.html')
+
+def icard_profile(request):
+    try:
+        email = request.GET.get('email')
+        student = Student.objects.get(email=email)
+        return render(request, 'student/icard_profile.html', {'student':student})
+    except:
+        return render(request, 'student/icard_profile.html', {'msg':'Invalid data!! Please try again!!'})

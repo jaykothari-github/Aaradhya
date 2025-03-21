@@ -64,11 +64,11 @@
                         
                         {% if request.session.email %}
 
-                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{request.session.email}}<i class="fa fa-caret-down hidden-xs" aria-hidden="true"></i></a>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{student.first_name}} {{student.last_name}}<i class="fa fa-caret-down hidden-xs" aria-hidden="true"></i></a>
 
                             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                              <li><a href="">Portfolio</a></li>
-                              <li><a href="">Logout</a></li>
+                              <li><a href="">profile</a></li>
+                              <li><a href="{% url 'logout' %}">Logout</a></li>
                             </ul>
 
                         </li>
@@ -77,8 +77,8 @@
                         <li><a href="{% url 'register' %}">Registration</a></li>
                         <li><a href="{% url 'login' %}">Login</a></li>
                         {% endif %}
-                        <li><a href="">Gallery Coming soon</a></li>
-                        <li><a href="">Coming soon</a></li>
+                        <!-- <li><a href="">Gallery Coming soon</a></li>
+                        <li><a href="">Coming soon</a></li> -->
 
                     </ul>
 
@@ -108,6 +108,7 @@
                         <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+917383463056">Naitik (+91) 7383463056 </a></li>
                         <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+918000070505">Mitul (+91) 8000070505</a></li>
                         <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+916355205655">Shraddha (+91) 6355205655</a></li>
+                        <li><i class="fa fa-instagram" aria-hidden="true"></i><a target="_blank" href="https://www.instagram.com/aradhya_dodhiya_classes?igsh=bnh5emQ5cG53ZDBv">instagram Page</a></li>
                         <li><i class="fa fa-map-marker" aria-hidden="true"></i><p>1st Floor, Lauva Panch ni Wadi, Rampura, Surat</p></li>
                     </ul>
                 </div>
@@ -119,7 +120,7 @@
                 <div class="row">
                     <div class="col-xs-8">
                         <div class="social-links">
-                            <a class="instagram-bg" href="https://www.instagram.com/aradhya_dodhiya_classes?igsh=bnh5emQ5cG53ZDBv"><i class="fa fa-instagram"></i></a>
+                            <a class="instagram-bg" target="_blank" href="https://www.instagram.com/aradhya_dodhiya_classes?igsh=bnh5emQ5cG53ZDBv"><i class="fa fa-instagram"></i></a>
                             <a class="facebook-bg" href="#"><i class="fa fa-facebook"></i></a>
                         </div><!-- /.social-links -->
                     </div>
