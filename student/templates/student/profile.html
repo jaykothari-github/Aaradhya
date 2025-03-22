@@ -96,8 +96,12 @@
                             </a>
                         {% endif %} 
                     </label>
+                    {% if student.profile_image_verified == False %}
                     <input type="file" name="profile_image"  style="background-color: rgb(152, 235, 152);" placeholder="Upload your pic..." class="form-control" id="profile_pic">
                     <p style="color: red; font-size: smaller; margin-left: 30px;">*Upload document less than 1.5 MB</p>
+                    {% endif %}
+                    <!-- <input type="file" name="profile_image"  style="background-color: rgb(152, 235, 152);" placeholder="Upload your pic..." class="form-control" id="profile_pic"> -->
+                    
                     
                   </div>
               </div>
