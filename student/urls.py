@@ -9,6 +9,7 @@ urlpatterns = [
     path('otp/', views.otp, name='otp'),
     # path('students/', views.student_list, name='student_list'),
     path('icard_profile', views.icard_profile, name='icard_profile'),
+    path('icard/', views.icard, name='icard'),
     path('password_reset/', views.password_reset, name='password_reset'),
     path('profile/', views.profile, name='profile'),
 ]

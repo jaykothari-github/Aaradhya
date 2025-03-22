@@ -10,7 +10,7 @@
                 <p>Get Register with Surat's one of best garba classes</p>
                 {% if request.session.email %}
                 <a href="{% url 'profile' %}" class="btn btn-border">Profile</a>
-                <a href="" class="btn btn-border">ID Card</a>
+                <a href="{% url 'icard' %}" class="btn btn-border">ID Card</a>
                 {% else %}
                 <a href="{% url 'register' %}" class="btn btn-border">Register</a>
                 <a href="{% url 'login' %}" class="btn btn-border">Login</a>

@@ -115,11 +115,23 @@ def login(request):
             if Student.objects.filter(email=email).exists():
                 student = Student.objects.get(email=email)
                 if student.password == password:
-                    if student.password_reset:
-                        request.session['email'] = student.email
-                        return render(request, 'student/index.html', {'student':student})
+                    if student.verified:
+                        if student.password_reset:
+                            request.session['email'] = student.email
+                            return render(request, 'student/index.html', {'student':student})
+                        else:
+                            return render(request, 'student/password_reset.html', { 'student':student ,'msg':'Please reset your password!! then complete your profile!!'})
                     else:
-                        return render(request, 'student/password_reset.html', { 'student':student ,'msg':'Please reset your password!! then complete your profile!!'})
+                        otp = randrange(1000,9999)
+                        subject = 'OTP For Registration'
+                        otp_msg = messages.otp_msg.format(fname=student.first_name , lname=student.last_name , otp=otp)
+                        try:
+                            send_mail(subject, otp_msg , settings.EMAIL_HOST_USER, [email])
+                            msg = 'Email already register!! Please verify your OTP!!'
+                            
+                        except Exception as e:
+                            msg = f'Error sending email: {e}'
+                        return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':'Email not verified!! Please verify your email!!'})
                 else:
                     return render(request, 'student/login.html', {'msg':'Invalid Password!! Please try again!!'})
             else:
@@ -163,6 +175,7 @@ def profile(request):
             
             if request.FILES.get('profile_image'):
                 student.profile_image = request.FILES['profile_image']
+                student.profile_image_verified = True
             if request.POST.get('password') and request.POST.get('cpassword'):
                 if request.POST['password'] == request.POST['cpassword']:
                     student.password = request.POST['password']
@@ -174,3 +187,11 @@ def profile(request):
         return render(request, 'student/profile.html', {'student':student})
     except:
         return render(request, 'student/login.html', {'msg':'Please login first!!'})
+    
+
+def icard(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        return render(request, 'student/icard.html', {'student':student})
+    # except:
+    #     return render(request, 'student/login.html', {'msg':'Please login first!!'})

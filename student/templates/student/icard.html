@@ -73,13 +73,12 @@
                         {% endif %} <br> 
 
                       </li>
-                      {% if student.role == 'Sir' or student.role == "Owner" %}
                       <li class="list-group-item">{{student.email}} <i class="fa fa-check" style="color: rgb(67, 252, 67);"></i>
                       <br>M:- {{student.mobile}}
                       <br>Parent M:- {{student.parent_mobile}} <br>
                       <br>Address:- {{student.address}}
                       </li>
-                      {% endif %}
+                      
                       <li class="list-group-item">
                         Batch:- {% if student.batch %} {{student.batch}} {% else %} Pending {% endif %} <br>
                         Starting Date:- {{student.batch_start_date}} <br>
