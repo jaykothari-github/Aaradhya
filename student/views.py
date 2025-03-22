@@ -155,3 +155,22 @@ def password_reset(request):
         return render(request, 'student/login.html', {'msg':'Password reset successfully!! Please login with new password!!'})
     
     return render(request, 'student/login.html')
+
+def profile(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if request.method == "POST":
+            
+            if request.FILES.get('profile_image'):
+                student.profile_image = request.FILES['profile_image']
+            if request.POST.get('password') and request.POST.get('cpassword'):
+                if request.POST['password'] == request.POST['cpassword']:
+                    student.password = request.POST['password']
+                else:
+                    return render(request, 'student/profile.html', {'student':student, 'msg':'Password and Confirm Password are not same!!'})
+            student.save()
+            return render(request, 'student/profile.html', {'student':student, 'msg':'Profile updated successfully!!'})
+        
+        return render(request, 'student/profile.html', {'student':student})
+    except:
+        return render(request, 'student/login.html', {'msg':'Please login first!!'})
