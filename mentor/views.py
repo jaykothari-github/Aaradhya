@@ -9,7 +9,7 @@ def login(request):
     return render(request, 'login.html')
 
 def index(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -30,8 +30,8 @@ def index(request):
                                               'unverified': unverified, 
                                               'aadhar_unverified': aadhar_unverified, 
                                               'profile_unverified': profile_unverified})
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
 
 
 def delete_profile(request, id):
