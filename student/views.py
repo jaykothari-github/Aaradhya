@@ -190,8 +190,8 @@ def profile(request):
     
 
 def icard(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         return render(request, 'student/icard.html', {'student':student})
-    # except:
-    #     return render(request, 'student/login.html', {'msg':'Please login first!!'})
+    except:
+        return render(request, 'student/login.html', {'msg':'Please login first!!'})
