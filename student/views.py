@@ -5,6 +5,7 @@ import string
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 import qrcode
+from PIL import Image
 import os
 from . import messages
 
@@ -80,13 +81,57 @@ def otp(request):
         if sys_otp == user_otp:
             student  = Student.objects.get(email=email)
             
-            ## QR code generate and save in folder
-            img = qrcode.make(f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.email}')
-            img_path = os.path.join(settings.BASE_DIR,'media') + '/profile_qr/' + f"{student.first_name}_{student.last_name}" + '.png'
-            img.save(img_path)
+            ### QR experiment
+            ################################################################
+            Logo_link = os.path.join(settings.BASE_DIR,'media') + '/default/qr_logo.png'
+
+            logo = Image.open(Logo_link)
+
+            # taking base width
+            basewidth = 120
+
+            # adjust image size
+            wpercent = (basewidth/float(logo.size[0]))
+            hsize = int((float(logo.size[1])*float(wpercent)))
+            logo = logo.resize((basewidth, hsize), 1)
+            QRcode = qrcode.QRCode(
+                error_correction=qrcode.constants.ERROR_CORRECT_H
+            )
+
+            url = f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.email}'
+            # adding URL or text to QRcode
+            QRcode.add_data(url)
+
+            # generating QR code
+            QRcode.make()
+
+            # adding color to QR code
+            QRimg = QRcode.make_image().convert('RGB')
+
+            # set size of QR code
+            pos = ((QRimg.size[0] - logo.size[0]) // 2,
+                (QRimg.size[1] - logo.size[1]) // 2)
+            QRimg.paste(logo, pos)
+
+            user_name = str(student.first_name + "_" + student.last_name +"_" + email.split('@')[0])
+            # save the QR code generated
+            img_path = os.path.join(settings.BASE_DIR,'media') + '/profile_qr/' + user_name + '.png'
+            QRimg.save(img_path)
+
+
+            ###############################################
+            ########### Simple QR #############
+            ###############################################
+
+            # ## QR code generate and save in folder
+            # img = qrcode.make(f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.email}')
+            # img_path = os.path.join(settings.BASE_DIR,'media') + '/profile_qr/' + f"{student.first_name}_{student.last_name}" + '.png'
+            # img.save(img_path)
             
+            ###############################################
+
             ## url save in Database 
-            student.profile_qr = 'profile_qr/' + f"{student.first_name}_{student.last_name}" + '.png'
+            student.profile_qr = 'profile_qr/' + user_name+ '.png'
             student.verified = True
             student.save()
 
