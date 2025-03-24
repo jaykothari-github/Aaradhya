@@ -27,7 +27,7 @@
             <h4 class="font-weight-normal mb-3">Total Students <i class="mdi mdi-chart-line mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5"> {{students_count}}</h2>
-            <h6 class="card-text">Increased by 60%</h6>
+            <h6 class="card-text">View All</h6>
           </div>
         </div>
       </div>
@@ -35,10 +35,10 @@
         <div class="card bg-gradient-info card-img-holder text-white">
           <div class="card-body">
             <img src="{% static 'assets/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
-            <h4 class="font-weight-normal mb-3">Fees Paid <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+            <h4 class="font-weight-normal mb-3">All Verified <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{fees_paid}}</h2>
-            <h6 class="card-text">Decreased by 10%</h6>
+            <h6 class="card-text">View All</h6>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
             <h4 class="font-weight-normal mb-3">Fees Pending<i class="mdi mdi-diamond-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{fees_pending}}</h2>
-            <h6 class="card-text">Increased by 5%</h6>
+            <h6 class="card-text">View All</h6>
           </div>
         </div>
       </div>
@@ -62,8 +62,8 @@
             <img src="{% static 'assets/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
             <h4 class="font-weight-normal mb-3">Unverified Accounts<i class="mdi mdi-chart-line mdi-24px float-end"></i>
             </h4>
-            <h2 class="mb-5"> {{unverified}}</h2>
-            <h6 class="card-text">Increased by 60%</h6>
+            <h2 class="mb-5"> {{unverified_list.count}}</h2>
+            <h6 class="card-text">View All</h6>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
             <h4 class="font-weight-normal mb-3">Unverified Profile Image <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{profile_unverified}}</h2>
-            <h6 class="card-text">Decreased by 10%</h6>
+            <h6 class="card-text">View All</h6>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
             <h4 class="font-weight-normal mb-3">Unverified Aadhar<i class="mdi mdi-diamond-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{aadhar_unverified}}</h2>
-            <h6 class="card-text">Increased by 5%</h6>
+            <h6 class="card-text">View All</h6>
           </div>
         </div>
       </div>
@@ -115,8 +115,8 @@
                     <td>
                       <img src="{{one.profile_image.url}}" class="me-2" alt="image"> {{one.first_name}} {{one.last_name}}
                     </td>
-                    <td> {{one.email}} </td>
-                    <td> {{one.mobile}} </td>
+                    <td> <a href="mailto:{{one.email}}">{{one.email}} </a></td>
+                    <td> <a href="tel:+91{{one.mobile}}">{{one.mobile}}</a> </td>
                     <td>
                       {% if one.verified %}
                       <label class="badge badge-gradient-success">Email</label>
@@ -137,6 +137,7 @@
                 </tbody>
               </table>
             </div>
+            view more
           </div>
         </div>
       </div>

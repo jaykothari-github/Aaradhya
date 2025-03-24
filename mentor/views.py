@@ -9,7 +9,7 @@ def login(request):
     return render(request, 'login.html')
 
 def index(request):
-    try:
+    # try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -17,8 +17,7 @@ def index(request):
         students = Student.objects.all()
         students_count = students.count() 
         fees_pending = students.filter(fees_status=False).count()
-        fees_paid = students.count() - fees_pending
-        unverified = students.filter(verified=False).count()
+        fees_paid = students.filter(fees_status=True, verified=True, password_reset=True, profile_image_verified=True, aadhar_verified=True ).count() 
         unverified_list = students.filter(Q(verified=False) | Q(password_reset=False)).order_by('created_at')
         aadhar_unverified = students.filter(aadhar_verified=False).count()
         profile_unverified = students.filter(profile_image_verified=False).count()
@@ -27,15 +26,17 @@ def index(request):
                                               'student': student, 
                                               'fees_pending': fees_pending, 
                                               'fees_paid': fees_paid, 
-                                              'unverified': unverified, 
                                               'aadhar_unverified': aadhar_unverified, 
                                               'profile_unverified': profile_unverified})
-    except:
-        return render(request, 'login.html')
+    # except:
+    #     return render(request, 'login.html')
 
 
 def delete_profile(request, id):
     try:
+        sir = student = Student.objects.get(email=request.session['email'])
+        if sir.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
         student = Student.objects.get(id=id)
         student.delete()
         return redirect('mentor-index')

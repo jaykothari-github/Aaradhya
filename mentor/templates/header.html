@@ -20,6 +20,7 @@
     <link rel="shortcut icon" href="{% static 'assets/images/logo.png' %}'" />
   </head>
   <body>
+    {% if student.role == "Sir" or student.role == "Owner" %}
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -88,59 +89,69 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Basic UI Elements</span>
+                <span class="menu-title">Students Details</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                <i class="mdi mdi-contacts menu-icon"></i>
+                <!-- <i class="mdi mdi-crosshairs-gps menu-icon"></i> -->
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                    <a class="nav-link" href="">Students List</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
+                    <a class="nav-link" href="">Fees Paid</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
+                    <a class="nav-link" href="">Fees Pending</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="">Unverifed Profile Image</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="">Unverifed AAdhaar Card</a>
                   </li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                <span class="menu-title">Icons</span>
+                <span class="menu-title">Profile Pic</span>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/icons/font-awesome.html">Font Awesome</a>
+                    <a class="nav-link" href="">Profile Pic Verification</a>
                   </li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#forms" aria-expanded="false" aria-controls="forms">
-                <span class="menu-title">Forms</span>
+                <span class="menu-title">Aadhaar Card</span>
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
               <div class="collapse" id="forms">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/forms/basic_elements.html">Form Elements</a>
+                    <a class="nav-link" href="">Aadhaar Card Verification</a>
                   </li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                <span class="menu-title">Charts</span>
+                <span class="menu-title">Update Student Details</span>
                 <i class="mdi mdi-chart-bar menu-icon"></i>
               </a>
               <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a>
+                    <a class="nav-link" href="">Update Batch details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="">Update Fees details</a>
                   </li>
                 </ul>
               </div>
@@ -205,6 +216,7 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    {% endif %}
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
