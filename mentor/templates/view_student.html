@@ -1,0 +1,221 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+          <i class="mdi mdi-home"></i>
+        </span> Student's Profile 
+      </h3>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    
+    <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{profile.first_name}}'s Profile 
+                {% if profile.verified %}
+                <i class="fa fa-check" style="color: rgb(0, 153, 255);"> Verified</i> 
+                {% else %} 
+                <i class="fa fa-times" style="color: rgb(255, 0, 0);"> Unverified</i> 
+                {% endif %}
+            </h4> 
+            <h4 style="color: red;">{{msg}}</h4>
+            <form class="form-sample">
+              <p class="card-description"> Personal info </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" readonly value="{{profile.first_name}}" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" readonly value="{{profile.last_name}}" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">  
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Date of Birth</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{profile.birth_date}}" readonly placeholder="dd/mm/yyyy" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Forgot Password</label>
+                      <div class="col-sm-9">
+                        <a href="{% url 'forgot_password' profile.id %}" class="btn btn-gradient-primary btn-fw">Forgot Password</a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              
+              <p class="card-description"> Contact Details </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Mobile</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" readonly value="{{profile.mobile}}" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Parent's Mobile</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" readonly value="{{profile.parent_mobile}}" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" readonly value="{{profile.email}}" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Address</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" readonly value="{{profile.address}}"/>
+                      </div>
+                    </div>
+                </div>       
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Aadhaar card
+                        {% if profile.aadhar_verified %}
+                        <i class="fa fa-check" style="color: rgb(0, 255, 136);"> Verified</i> 
+                        {% else %} 
+                        <i class="fa fa-times" style="color: rgb(255, 0, 0);"> Unverified</i> 
+                        {% endif %}
+                      </label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" readonly value="{{profile.aadhar}}" />
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Profile Pic
+                        {% if profile.profile_image_verified %}
+                        <i class="fa fa-check" style="color: rgb(0, 255, 136);"> Verified</i> 
+                        {% else %} 
+                        <i class="fa fa-times" style="color: rgb(255, 0, 0);"> Unverified</i> 
+                        {% endif %}
+                      </label>
+                      <div class="col-sm-9">
+                        <a href="{{profile.profile_image.url}}" target="_blank" class="btn btn-gradient-primary btn-fw">View Pic</a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <p class="card-description"> Batch Details </p>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Batch Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" readonly value="{{profile.batch_name}}" />
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Fees Status
+                        {% if profile.fees_status %}
+                        <i class="fa fa-check" style="color: rgb(0, 255, 136);"> Paid</i> 
+                        {% else %} 
+                        <i class="fa fa-times" style="color: rgb(255, 0, 0);"> Unpaid</i> 
+                        {% endif %}
+                    </label>
+                    <div class="col-sm-9">
+                        <input class="form-control" value="{{profile.fees_paid}} / {{profile.fees_amount}}" readonly />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">  
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Batch Start Date</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{profile.batch_start_date}}" readonly placeholder="dd/mm/yyyy" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Batch End Date</label>
+                      <div class="col-sm-9">
+                        <input class="form-control" value="{{profile.batch_end_date}}" readonly placeholder="dd/mm/yyyy" />
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+              {% if student.role == "Owner" %}
+              <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <a href="" class="btn btn-gradient-danger btn-fw">Delete Profile</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <a href="" target="_blank" class="btn btn-gradient-info btn-fw">Temp</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            </form>
+          </div>
+        </div>
+      </div>
+
+   
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+
+{% endblock %}

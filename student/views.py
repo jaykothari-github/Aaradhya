@@ -66,10 +66,6 @@ def register(request):
 
                 return render(request, 'student/otp.html', {'email':email, 'otp':otp, 'msg':msg})
 
-
-            # aadhar_image = request.FILES['aadhar_image']
-            # profile_qr = request.FILES['profile_qr']
-            # profile_image = request.FILES['profile_image']
         return render(request, 'student/register.html')
 
 
