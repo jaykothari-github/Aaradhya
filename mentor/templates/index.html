@@ -37,7 +37,7 @@
             <img src="{% static 'assets/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
             <h4 class="font-weight-normal mb-3">All Verified <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
             </h4>
-            <h2 class="mb-5">{{fees_paid}}</h2>
+            <h2 class="mb-5">{{all_verified}}</h2>
             <h6 class="card-text">View All</h6>
           </div>
         </div>
@@ -121,12 +121,12 @@
                       {% if one.verified %}
                       <label class="badge badge-gradient-success">Email</label>
                       {% else %}
-                      <label class="badge badge-gradient-danger">Email</label>
+                      <label class="badge badge-danger">Email</label>
                       {% endif %}
                       {% if one.password_reset %}
                       <label class="badge badge-gradient-success">Password</label>
                       {% else %}
-                      <label class="badge badge-gradient-danger">Password</label>
+                      <label class="badge badge-danger">Password</label>
                       {% endif %}
                       
                     </td>
@@ -159,78 +159,38 @@
       <div class="col-md-7 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Project Status</h4>
+            <h4 class="card-title">Verification Pending <span style="font-style: italic; color: brown;">(Pic / Aadhaar)</span></h4>
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
-                    <th> # </th>
+                    <th> #Id </th>
                     <th> Name </th>
-                    <th> Due Date </th>
-                    <th> Progress </th>
+                    <th> Email </th>
+                    <th> Pendings </th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for one in pending_verification %}
                   <tr>
-                    <td> 1 </td>
-                    <td> Herman Beck </td>
-                    <td> May 15, 2015 </td>
+                    <td> {{one.id}} </td>
+                    <td> {{one.first_name}} {{one.last_name}} </td>
+                    <td> {{one.email}} </td>
                     <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                      {% if one.profile_image_verified %}
+                      <label class="badge badge-gradient-success">Pic</label>
+                      {% else %}
+                      <label class="badge badge-gradient-danger">Pic</label>
+                      {% endif %}
+                      {% if one.aadhar_verified %}
+                      <label class="badge badge-gradient-success">Aadhaar</label>
+                      {% else %}
+                      <label class="badge badge-gradient-danger">Aadhaar</label>
+                      {% endif %}
                     </td>
                   </tr>
-                  <tr>
-                    <td> 2 </td>
-                    <td> Messsy Adam </td>
-                    <td> Jul 01, 2015 </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td> 3 </td>
-                    <td> John Richards </td>
-                    <td> Apr 12, 2015 </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td> 4 </td>
-                    <td> Peter Meggik </td>
-                    <td> May 15, 2015 </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td> 5 </td>
-                    <td> Edward </td>
-                    <td> May 03, 2015 </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td> 5 </td>
-                    <td> Ronald </td>
-                    <td> Jun 05, 2015 </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                  </tr>
+                  {% endfor %}
+                  
                 </tbody>
               </table>
             </div>
