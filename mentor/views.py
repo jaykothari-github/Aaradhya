@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail
 from django.conf import settings
+from student.messages import forgot_password_msg
 
 # Create your views here.
 
@@ -69,7 +70,7 @@ def students_list(request):
         
         if request.method == 'POST':
             search = request.POST.get('search')
-            students = Student.objects.filter(Q(id=search) | Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search)).order_by('id')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search)).order_by('id')
             return render(request, 'students_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
         
         students = Student.objects.all()
@@ -80,19 +81,25 @@ def students_list(request):
     
 
 def view_student(request, id, msg=''):
-    student = Student.objects.get(email=request.session['email'])
-    if student.role == 'Student':
-        return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
-    profile = Student.objects.get(id=id) 
-    return render(request, 'view_student.html', {'student': student, 'profile': profile, 'msg': msg})
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        profile = Student.objects.get(id=id) 
+        return render(request, 'view_student.html', {'student': student, 'profile': profile, 'msg': msg})
+    except:
+        return render(request, 'login.html')
 
 def forgot_password(request, id):
-    student = Student.objects.get(email=request.session['email'])
-    if student.role == 'Student':
-        return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
-    profile = Student.objects.get(id=id)
-    subject = 'Password Recovery'
-    message = f'Hello {profile.first_name},\n\nYour password is: "{profile.password}"\n\nPlease keep it secure.\n\nRegards,\nAaradhya Group'
-    send_mail(subject, message, settings.EMAIL_HOST_USER, [profile.email])
-    # return render(request, 'view_student.html', {'student': student, 'profile': profile, 'msg': 'Password sent to the registered email'})
-    return redirect('view_student', id=id, msg='Password sent to the registered email')
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        profile = Student.objects.get(id=id)
+        subject = 'Password Recovery'
+        message = forgot_password_msg.format(profile=profile)
+        send_mail(subject, message, settings.EMAIL_HOST_USER, [profile.email])
+        # return render(request, 'view_student.html', {'student': student, 'profile': profile, 'msg': 'Password sent to the registered email'})
+        return redirect('view_student', id=id, msg='Password sent to the registered email')
+    except:
+        return render(request, 'login.html')

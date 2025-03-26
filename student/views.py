@@ -28,6 +28,8 @@ def register(request):
         if request.method == "POST":
             email = request.POST['email']
             if Student.objects.filter(email=email).exists():
+                if Student.objects.filter(aadhar=request.POST['aadhar']).exists():
+                    return render(request, 'student/register.html', {'msg':'Aadhar already exists!! Please check with admin!!'})   
                 student = Student.objects.get(email=email)
                 if student.verified:
                     return render(request, 'student/register.html', {'msg':'Email already exists!! Please try with another email!!'})

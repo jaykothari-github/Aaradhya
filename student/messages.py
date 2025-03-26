@@ -25,3 +25,10 @@ Password: {student.password}
 Thanks & Regards,
 Aaradhya group
 """
+
+forgot_password_msg = """Hi {profile.first_name} {profile.last_name}!!, \n\n
+Your password is: "{profile.password}" \n\n
+Please keep it secure. \n\n
+Thanks & Regards, \n
+Aaradhya Group \
+ """
