@@ -64,12 +64,18 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                               <li><a href="{% url 'profile' %}">profile</a></li>
                               <li><a href="{% url 'icard' %}">ID Card</a></li>
+                              {% if student.role != 'Student' %}
+                              <li><a href="{% url 'mentor-index' %}">Mentor</a></li>
+                              {% endif %}
                               <li><a href="{% url 'logout' %}"> <i class="fa fa-sign-out"></i> Logout</a></li>
                             </ul>
                             
                         </li>
                         <li><a href="{% url 'profile' %}">profile</a></li>
                         <li><a href="{% url 'icard' %}">ID Card</a></li>
+                        {% if student.role != 'Student' %}
+                        <li><a href="{% url 'mentor-index' %}">Mentor</a></li>
+                        {% endif %}
                         <li><a href="{% url 'logout' %}"> <i class="fa fa-sign-out"></i> Logout</a></li>
 
                         {% else %}
