@@ -53,28 +53,28 @@
                     
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item">{{student.first_name}} {{student.last_name}} <br>Id: Aaradhya/General/{{student.id}}</li>
-                      <li class="list-group-item">
+                      <li class="list-group-item" {% if student.fees_status and student.profile_image_verified and student.aadhar_verified %} style="border-color: rgb(50, 188, 243); border-radius: 5%; border-width: 5px;" {% else %} style="border-color: rgb(255, 0, 0); border-radius: 5%; border-width: 5px;" {% endif %} >
                         {% if student.fees_status %}
-                        <i class="fa fa-check" style="color: rgb(50, 243, 50);"> Fees: {{student.fees_amount}}:{{student.fees_paid}}</i>
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Fees: {{student.fees_amount}}:{{student.fees_paid}}</i>
                         {% else %}
                         <i class="fa fa-times" style="color: red;"> Fees: {{student.fees_amount}}:{{student.fees_paid}}</i>
                         {% endif %} <br>
                         
                         {% if student.profile_image_verified %}
-                        <i class="fa fa-check" style="color: rgb(50, 243, 50);"> Profile Picture</i>
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Profile Picture</i>
                         {% else %}
                         <i class="fa fa-times" style="color: red;"> Profile Picture Pending</i>
                         {% endif %} <br>
 
                         {% if student.aadhar_verified %}
-                        <i class="fa fa-check" style="color: rgb(50, 243, 50);"> Aadhaar verified</i>
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Aadhaar verified</i>
                         {% else %}
                         <i class="fa fa-times" style="color: red;"> Aadhaar not verified</i>
                         {% endif %} <br> 
 
                       </li>
-                      {% if student.role == 'Sir' or student.role == "Owner" %}
-                      <li class="list-group-item">{{student.email}} <i class="fa fa-check" style="color: rgb(67, 252, 67);"></i>
+                      {% if viewer.role == 'Sir' or viewer.role == "Owner" %}
+                      <li class="list-group-item">{{student.email}} <i class="fa fa-check" style="color: rgb(50, 188, 243);"></i>
                       <br>M:- {{student.mobile}}
                       <br>Parent M:- {{student.parent_mobile}} <br>
                       <br>Address:- {{student.address}}

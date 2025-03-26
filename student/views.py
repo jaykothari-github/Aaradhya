@@ -192,7 +192,11 @@ def icard_profile(request):
     try:
         email = request.GET.get('email')
         student = Student.objects.get(email=email)
-        return render(request, 'student/icard_profile.html', {'student':student})
+        try:
+            viewer = Student.objects.get(email=request.session['email'])
+            return render(request, 'student/icard_profile.html', {'student':student,'viewer':viewer})
+        except:
+            return render(request, 'student/icard_profile.html', {'student':student}) 
     except:
         return render(request, 'student/icard_profile.html', {'msg':'Invalid data!! Please try again!!'})
     

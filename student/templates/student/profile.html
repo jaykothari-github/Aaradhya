@@ -90,7 +90,7 @@
                   <div class="form-group">
                     <label for="name">Profile pic
                         {% if student.profile_image %}
-                         <span style="color: rgb(0, 255, 106);"> 
+                         <span style="color: rgb(50, 188, 243);"> 
                             <a href="{{student.profile_image.url}}" target="_blank">
                                 <i class="fa fa-check"></i> check image here </span>
                             </a>
@@ -109,7 +109,7 @@
                   <div class="form-group">
                     <label for="name">Aadhaar no:
                         {% if student.aadhar_verified %}
-                         <span style="color: rgb(0, 255, 106);"> <i class="fa fa-check"></i> Verified </span>
+                         <span style="color: rgb(50, 188, 243);"> <i class="fa fa-check"></i> Verified </span>
                         {% else %}
                         <span style="color: red;"> <i class="fa fa-times"></i> Not Verified </span>
                         {% endif %}    
