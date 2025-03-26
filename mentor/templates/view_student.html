@@ -30,6 +30,15 @@
                 {% else %} 
                 <i class="fa fa-times" style="color: rgb(255, 0, 0);"> Unverified</i> 
                 {% endif %}
+                {% if profile.aadhar_verified %}
+                <br><br><i class="fa fa-check" style="color: rgb(0, 153, 255);"> Aadhaar</i> 
+                {% endif %}
+                {% if profile.fees_status %}
+                <i class="fa fa-check" style="color: rgb(0, 153, 255);"> Fees</i> 
+                {% endif %}
+                {% if profile.profile_image_verified %}
+                <i class="fa fa-check" style="color: rgb(0, 153, 255);"> Pic</i> 
+                {% endif %}
             </h4> 
             <h4 style="color: red;">{{msg}}</h4>
             <form class="form-sample">
@@ -193,8 +202,22 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group row">
-                      <div class="col-sm-4">
-                        <a href="" target="_blank" class="btn btn-gradient-info btn-fw">Temp</a>
+                      <div class="col-sm-12">
+                      <a href="" target="_blank" class="btn btn-gradient-info btn-fw">AAdhaar Update</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                      <a href="" target="_blank" class="btn btn-gradient-success btn-fw">Profile pic Update</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                      <a href="" target="_blank" class="btn btn-gradient-success btn-fw">Fees Status Update</a>
                       </div>
                     </div>
                 </div>

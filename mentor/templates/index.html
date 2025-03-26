@@ -38,7 +38,7 @@
             <h4 class="font-weight-normal mb-3">All Verified <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{all_verified}}</h2>
-            <h6 class="card-text">View All</h6>
+            <h6 class="card-text"><a href="{% url 'all_verified' %}">View All</a></h6>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
             <h4 class="font-weight-normal mb-3">Fees Pending<i class="mdi mdi-diamond-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{fees_pending}}</h2>
-            <h6 class="card-text">View All</h6>
+            <h6 class="card-text"><a href="{% url 'fees_unpaid_list' %}" >View All</a></h6>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@
                   {% for one in unverified_list %}
                   <tr>
                     <td>
-                      <img src="{{one.profile_image.url}}" class="me-2" alt="image"> {{one.first_name}} {{one.last_name}}
+                      <img src="{{one.profile_image.url}}" class="me-2" alt="image"> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
                     </td>
                     <td> <a href="mailto:{{one.email}}">{{one.email}} </a></td>
                     <td> <a href="tel:+91{{one.mobile}}">{{one.mobile}}</a> </td>
@@ -177,7 +177,7 @@
                   {% for one in pending_verification %}
                   <tr>
                     <td> {{one.id}} </td>
-                    <td> {{one.first_name}} {{one.last_name}} </td>
+                    <td> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a>  </td>
                     <td> {{one.email}} </td>
                     <td>
                       {% if one.profile_image_verified %}

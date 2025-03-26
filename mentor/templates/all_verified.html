@@ -1,0 +1,116 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+          <i class="mdi mdi-home"></i>
+        </span> All Verified Students' List
+      </h3>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Search bar -->
+    <div class="row">
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Search</h4>
+            <form method="POST" action="{% url 'all_verified' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, mobile">
+              </div>
+              <button type="submit" class="btn btn-gradient-primary mr-2">Search</button>
+              <a href="{% url 'students_list' %}" class="btn btn-gradient-info">Reset</a>
+            </form>
+          </div>
+    
+    <!-- Table for student list -->
+    <div class="row">
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            {% if msg %}
+            <h4 class="card-title">{{msg}}</h4>
+            {% else %}
+            <h4 class="card-title">All Verified Students</h4>
+            {% endif %}
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th> Id </th>
+                    <th> Name </th>
+                    <th> Fees Status </th>
+                    <th> Profile Pic Status </th>
+                    <th> Aadhaar card status </th>
+                    <!-- <th> Fees status </th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for one in students %}
+                  <tr>
+                    <td>{{one.id}}</td>
+                    <td>
+                      <img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
+                    </td>
+                    <td> {{one.fees_paid}} / {{one.fees_amount}} <br>
+                        {% if one.fees_status %}
+                        &nbsp;&nbsp;<label class="badge badge-gradient-success">Paid</label>
+                        {% else %}
+                        <label class="badge badge-gradient-danger">Unpaid</label>
+                        {% endif %}
+                    
+                    </td>
+                    <td> 
+                        {% if one.profile_image_verified %}
+                        &nbsp;&nbsp;<label class="badge badge-gradient-success">Verified</label>
+                        {% else %}
+                        <label class="badge badge-gradient-danger">Unverified</label>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if one.aadhar_verified %}
+                        &nbsp;&nbsp;<label class="badge badge-gradient-success">Verified</label>
+                        {% else %}
+                        <label class="badge badge-gradient-danger">Unverified</label>
+                        {% endif %}
+                    </td>
+                    
+                    <td>
+                      
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Table for student list -->
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+
+{% endblock %}

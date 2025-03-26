@@ -79,6 +79,57 @@ def students_list(request):
     except:
         return render(request, 'login.html')
     
+def fees_paid_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), fees_status=True).order_by('id')
+            return render(request, 'fees_paid_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(fees_status=True)
+        return render(request, 'fees_paid_list.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+    
+def fees_unpaid_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), fees_status=False).order_by('id')
+            return render(request, 'fees_unpaid_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(fees_status=False)
+        return render(request, 'fees_unpaid_list.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+    
+def all_verified(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), fees_status=True, profile_image_verified=True, aadhar_verified=True).order_by('id')
+            return render(request, 'all_verified.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(fees_status=True, profile_image_verified=True, aadhar_verified=True)
+        return render(request, 'all_verified.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+
 
 def view_student(request, id, msg=''):
     try:

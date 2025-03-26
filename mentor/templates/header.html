@@ -100,16 +100,13 @@
                     <a class="nav-link" href="{% url 'students_list' %}">Students List</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="">Fees Paid</a>
+                    <a class="nav-link" href="{% url 'fees_paid_list' %}">Fees Paid</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="">Fees Pending</a>
+                    <a class="nav-link" href="{% url 'fees_unpaid_list' %}">Fees Pending</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="">Unverifed Profile Image</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="">Unverifed AAdhaar Card</a>
+                    <a class="nav-link" href="{% url 'all_verified' %}">All Verified Students</a>
                   </li>
                 </ul>
               </div>
@@ -121,6 +118,9 @@
               </a>
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="">Unverifed Profile Image</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="">Profile Pic Verification</a>
                   </li>
@@ -134,6 +134,9 @@
               </a>
               <div class="collapse" id="forms">
                 <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="">Unverifed AAdhaar Card</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="">Aadhaar Card Verification</a>
                   </li>

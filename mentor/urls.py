@@ -9,4 +9,7 @@ urlpatterns = [
     path("view_student/<int:id>/<str:msg>", views.view_student, name='view_student'),
     path("view_student/<int:id>", views.view_student, name='view_student'),
     path("forgot_password/<int:id>", views.forgot_password, name='forgot_password'),
+    path('fees_paid_list/', views.fees_paid_list, name='fees_paid_list'),
+    path('fees_unpaid_list/', views.fees_unpaid_list, name='fees_unpaid_list'),
+    path('all_verified/', views.all_verified, name='all_verified'),
 ]
