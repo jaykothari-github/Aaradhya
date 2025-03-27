@@ -50,7 +50,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th> Id </th>
+                    <th> Role </th>
                     <th> Name </th>
                     <th> Email </th>
                     <th> Mobile </th>
@@ -61,7 +61,7 @@
                 <tbody>
                   {% for one in students %}
                   <tr>
-                    <td>{{one.id}}</td>
+                    <td> <label class="badge badge-gradient-success">{{one.role}}</label> </td>
                     <td>
                       <img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
                     </td>

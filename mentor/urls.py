@@ -12,4 +12,5 @@ urlpatterns = [
     path('fees_paid_list/', views.fees_paid_list, name='fees_paid_list'),
     path('fees_unpaid_list/', views.fees_unpaid_list, name='fees_unpaid_list'),
     path('all_verified/', views.all_verified, name='all_verified'),
+    path('sir_list/', views.sir_list, name='sir_list'),
 ]

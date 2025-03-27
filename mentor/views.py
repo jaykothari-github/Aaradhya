@@ -131,6 +131,23 @@ def all_verified(request):
         return render(request, 'login.html')
 
 
+def sir_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), role='Sir').order_by('id')
+            return render(request, 'sir_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(role='Sir')
+        return render(request, 'sir_list.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+
 def view_student(request, id, msg=''):
     try:
         student = Student.objects.get(email=request.session['email'])

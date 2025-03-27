@@ -5,4 +5,4 @@ from .models import *
 
 @admin.register(Student)
 class ModelMember(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'id', 'email','mobile','verified']
+    list_display = ['first_name', 'last_name', 'id', 'email','aadhar','verified']
