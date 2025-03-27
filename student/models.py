@@ -22,7 +22,7 @@ class Student(models.Model):
     password = models.CharField(max_length=30)
     password_reset = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
-    aadhar = models.CharField(max_length=12, unique=True)
+    aadhar = models.CharField(max_length=12)
     aadhar_verified = models.BooleanField(default=False)
     profile_qr = models.FileField(upload_to='profile_qr/',default='default/qr.png')
     profile_image = models.FileField(upload_to='profile/', default='default/profile.jpg')
