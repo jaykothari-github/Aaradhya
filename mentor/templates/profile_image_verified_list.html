@@ -9,7 +9,7 @@
       <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
           <i class="mdi mdi-home"></i>
-        </span> All Verified Students' List
+        </span> Profile Image verification List
       </h3>
       <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
@@ -26,13 +26,13 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Search</h4>
-            <form method="POST" action="{% url 'all_verified' %}">
+            <form method="POST" action="{% url 'profile_image_verified_list' %}">
               {% csrf_token %}
               <div class="form-group">
                 <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, mobile">
               </div>
               <button type="submit" class="btn btn-gradient-primary mr-2">Search</button>
-              <a href="{% url 'all_verified' %}" class="btn btn-gradient-info">Reset</a>
+              <a href="{% url 'profile_image_verified_list' %}" class="btn btn-gradient-info">Reset</a>
             </form>
           </div>
     
@@ -44,18 +44,19 @@
             {% if msg %}
             <h4 class="card-title">{{msg}}</h4>
             {% else %}
-            <h4 class="card-title">All Verified Students</h4>
+            <h4 class="card-title">All Verified Photo Students's List</h4>
             {% endif %}
+            
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
                     <th> Id </th>
                     <th> Name </th>
-                    <th> Fees Status </th>
-                    <th> Profile Pic Status </th>
-                    <th> Aadhaar card status </th>
-                    <!-- <th> Fees status </th> -->
+                    <th> Email </th>
+                    <th> Mobile </th>
+                    <th> Status </th>
+                    <th> Unlock Profile </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,31 +66,18 @@
                     <td>
                       <img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
                     </td>
-                    <td> {{one.fees_paid}} / {{one.fees_amount}} <br>
-                        {% if one.fees_status %}
-                        &nbsp;&nbsp;<label class="badge badge-gradient-success">Paid</label>
-                        {% else %}
-                        <label class="badge badge-gradient-danger">Unpaid</label>
-                        {% endif %}
-                    
-                    </td>
-                    <td> 
-                        {% if one.profile_image_verified %}
-                        &nbsp;&nbsp;<label class="badge badge-gradient-success">Verified</label>
-                        {% else %}
-                        <label class="badge badge-gradient-danger">Unverified</label>
-                        {% endif %}
-                    </td>
+                    <td> <a href="mailto:{{one.email}}">{{one.email}} </a></td>
+                    <td> <a href="tel:+91{{one.mobile}}">{{one.mobile}}</a> </td>
                     <td>
-                        {% if one.aadhar_verified %}
-                        &nbsp;&nbsp;<label class="badge badge-gradient-success">Verified</label>
-                        {% else %}
-                        <label class="badge badge-gradient-danger">Unverified</label>
-                        {% endif %}
-                    </td>
-                    
-                    <td>
+                      {% if one.profile_image_verified %}
+                      <label class="badge badge-gradient-success">Pic</label>
+                      {% else %}
+                      <label class="badge badge-gradient-danger">Pic</label>
+                      {% endif %}
                       
+                    </td>
+                    <td>
+                      <a href="{% url 'unlock_profile' one.id %}"><label class="badge badge-gradient-info"> <i class="fa fa-edit"></i> Unlock Pic</label></a>
                     </td>
                   </tr>
                   {% endfor %}

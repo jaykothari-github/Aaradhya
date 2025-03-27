@@ -148,6 +148,57 @@ def sir_list(request):
     except:
         return render(request, 'login.html')
 
+
+def profile_image_verified_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), profile_image_verified=True).order_by('id')
+            return render(request, 'profile_image_verified_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(profile_image_verified=True)
+        return render(request, 'profile_image_verified_list.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+    
+def unlock_profile(request,id):
+    student = Student.objects.get(id=id)
+    student.profile_image_verified = False
+    student.save()
+    return redirect('profile_image_verified_list')
+    
+
+def lock_profile(request,id):
+    student = Student.objects.get(id=id)
+    student.profile_image_verified = True
+    student.save()
+    return redirect('profile_image_unverified_list')
+
+
+def profile_image_unverified_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), profile_image_verified=False).order_by('id')
+            return render(request, 'profile_image_unverified_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(profile_image_verified=False)
+        return render(request, 'profile_image_unverified_list.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+  
+
+
 def view_student(request, id, msg=''):
     try:
         student = Student.objects.get(email=request.session['email'])

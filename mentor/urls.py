@@ -13,4 +13,8 @@ urlpatterns = [
     path('fees_unpaid_list/', views.fees_unpaid_list, name='fees_unpaid_list'),
     path('all_verified/', views.all_verified, name='all_verified'),
     path('sir_list/', views.sir_list, name='sir_list'),
+    path('profile_image_verified_list/', views.profile_image_verified_list, name='profile_image_verified_list'),
+    path('profile_image_unverified_list/', views.profile_image_unverified_list, name='profile_image_unverified_list'),
+    path('unlock_profile/<int:id>', views.unlock_profile, name='unlock_profile'),
+    path('lock_profile/<int:id>', views.lock_profile, name='lock_profile'),
 ]

@@ -9,7 +9,7 @@
       <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
           <i class="mdi mdi-home"></i>
-        </span> Students List
+        </span> Sir's List
       </h3>
       <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
@@ -26,13 +26,13 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Search</h4>
-            <form method="POST" action="{% url 'students_list' %}">
+            <form method="POST" action="{% url 'sir_list' %}">
               {% csrf_token %}
               <div class="form-group">
                 <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, mobile">
               </div>
               <button type="submit" class="btn btn-gradient-primary mr-2">Search</button>
-              <a href="{% url 'students_list' %}" class="btn btn-gradient-info">Reset</a>
+              <a href="{% url 'sir_list' %}" class="btn btn-gradient-info">Reset</a>
             </form>
           </div>
     
@@ -44,7 +44,7 @@
             {% if msg %}
             <h4 class="card-title">{{msg}}</h4>
             {% else %}
-            <h4 class="card-title">All Students</h4>
+            <h4 class="card-title">All Sir/Madam</h4>
             {% endif %}
             <div class="table-responsive">
               <table class="table">
