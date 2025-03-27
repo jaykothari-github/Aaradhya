@@ -17,4 +17,8 @@ urlpatterns = [
     path('profile_image_unverified_list/', views.profile_image_unverified_list, name='profile_image_unverified_list'),
     path('unlock_profile/<int:id>', views.unlock_profile, name='unlock_profile'),
     path('lock_profile/<int:id>', views.lock_profile, name='lock_profile'),
+    path('unverified_aadhar_list/', views.unverified_aadhar_list, name='unverified_aadhar_list'),
+    path('verified_aadhar_list/', views.verified_aadhar_list, name='verified_aadhar_list'),
+    path('aadhar_mark_verified/<int:id>', views.aadhar_mark_verified, name='aadhar_mark_verified'),
+    path('aadhar_mark_unverified/<int:id>', views.aadhar_mark_unverified, name='aadhar_mark_unverified'),
 ]

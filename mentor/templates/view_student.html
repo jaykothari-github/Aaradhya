@@ -196,21 +196,29 @@
                 <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
-                        <a href="" class="btn btn-gradient-danger btn-fw">Delete Profile</a>
+                        <a href="{% url 'delete_profile' profile.id %}" class="btn btn-gradient-danger btn-fw">Delete Profile</a>
                       </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
-                      <a href="" target="_blank" class="btn btn-gradient-info btn-fw">Aadhaar Update</a>
+                        {% if profile.aadhar_verified %}
+                        <a href="{% url 'aadhar_mark_unverified' profile.id %}"  class="btn btn-gradient-danger btn-fw">Mark Unverified Aadhaar</a>
+                        {% else %}
+                        <a href="{% url 'aadhar_mark_verified' profile.id %}"  class="btn btn-gradient-info btn-fw">Mark Verified Aadhaar</a>
+                        {% endif %}
                       </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
-                      <a href="{% url 'lock_profile' profile.id %}" class="btn btn-gradient-success btn-fw">Profile pic Lock</a>
+                        {% if profile.profile_image_verified %}
+                        <a href="{% url 'unlock_profile' profile.id %}" class="btn btn-gradient-danger btn-fw">Click to Unlock DP</a>
+                        {% else %}
+                        <a href="{% url 'lock_profile' profile.id %}" class="btn btn-gradient-success btn-fw">Click to Lock DP</a>
+                        {% endif %}
                       </div>
                     </div>
                 </div>

@@ -24,6 +24,7 @@ class Student(models.Model):
     verified = models.BooleanField(default=False)
     aadhar = models.CharField(max_length=12)
     aadhar_verified = models.BooleanField(default=False)
+    aadhar_verified_by = models.CharField(max_length=30,blank=True,null=True)
     profile_qr = models.FileField(upload_to='profile_qr/',default='default/qr.png')
     profile_image = models.FileField(upload_to='profile/', default='default/profile.jpg')
     profile_image_verified = models.BooleanField(default=False)

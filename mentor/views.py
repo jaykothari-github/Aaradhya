@@ -166,22 +166,9 @@ def profile_image_verified_list(request):
     except:
         return render(request, 'login.html')
     
-def unlock_profile(request,id):
-    student = Student.objects.get(id=id)
-    student.profile_image_verified = False
-    student.save()
-    return redirect('profile_image_verified_list')
-    
-
-def lock_profile(request,id):
-    student = Student.objects.get(id=id)
-    student.profile_image_verified = True
-    student.save()
-    return redirect('profile_image_unverified_list')
-
 
 def profile_image_unverified_list(request):
-    try:
+    # try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -194,10 +181,85 @@ def profile_image_unverified_list(request):
         students = Student.objects.filter(profile_image_verified=False)
         return render(request, 'profile_image_unverified_list.html', {'students': students, 'student': student})
     
-    except:
-        return render(request, 'login.html')
+    # except:
+    #     return render(request, 'login.html')
   
 
+def unlock_profile(request,id):
+    student = Student.objects.get(id=id)
+    viewer = Student.objects.get(email=request.session['email'])
+    if viewer.role != 'Student':
+        student.profile_image_verified = False
+        student.save()
+        return redirect('profile_image_unverified_list')
+    return redirect('profile_image_unverified_list')
+    
+
+def lock_profile(request,id):
+    student = Student.objects.get(id=id)
+    viewer = Student.objects.get(email=request.session['email'])
+    if viewer.role != 'Student':
+        student.profile_image_verified = True
+        student.save()
+        return redirect('profile_image_unverified_list')
+    return redirect('profile_image_unverified_list')
+
+def unverified_aadhar_list(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), aadhar_verified=False).order_by('id')
+            return render(request, 'unverified_aadhar_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(aadhar_verified=False)
+        return render(request, 'unverified_aadhar_list.html', {'students': students, 'student': student})
+    
+    # except:
+    #     return render(request, 'login.html')
+
+
+def verified_aadhar_list(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), aadhar_verified=True).order_by('id')
+            return render(request, 'verified_aadhar_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.filter(aadhar_verified=True)
+        return render(request, 'verified_aadhar_list.html', {'students': students, 'student': student})
+    
+    # except:
+    #     return render(request, 'login.html')
+
+
+
+def aadhar_mark_verified(request,id):
+    student = Student.objects.get(id=id)
+    viewer = Student.objects.get(email=request.session['email'])
+    if viewer.role != 'Student':
+        student.aadhar_verified_by = str(viewer.first_name + " " + viewer.last_name)
+        student.aadhar_verified = True
+        student.save()
+        return redirect('unverified_aadhar_list')
+    return redirect('unverified_aadhar_list')
+
+def aadhar_mark_unverified(request,id):
+    student = Student.objects.get(id=id)
+    viewer = Student.objects.get(email=request.session['email'])
+    if viewer.role != 'Student':
+        student.aadhar_verified_by = str(viewer.first_name + " " + viewer.last_name)
+        student.aadhar_verified = False
+        student.save()
+        return redirect('unverified_aadhar_list')
+    return redirect('unverified_aadhar_list')
 
 def view_student(request, id, msg=''):
     try:
