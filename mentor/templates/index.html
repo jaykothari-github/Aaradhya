@@ -74,7 +74,7 @@
             <h4 class="font-weight-normal mb-3">Unverified Profile Image <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{profile_unverified}}</h2>
-            <h6 class="card-text">View All</h6>
+            <a href="{% url 'profile_image_unverified_list' %}"><h6 class="card-text">View All</h6></a>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
             <h4 class="font-weight-normal mb-3">Unverified Aadhar<i class="mdi mdi-diamond-outline mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5">{{aadhar_unverified}}</h2>
-            <h6 class="card-text">View All</h6>
+            <a href="{% url 'unverified_aadhar_list' %}"><h6 class="card-text">View All</h6></a>
           </div>
         </div>
       </div>

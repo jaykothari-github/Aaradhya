@@ -21,4 +21,5 @@ urlpatterns = [
     path('verified_aadhar_list/', views.verified_aadhar_list, name='verified_aadhar_list'),
     path('aadhar_mark_verified/<int:id>', views.aadhar_mark_verified, name='aadhar_mark_verified'),
     path('aadhar_mark_unverified/<int:id>', views.aadhar_mark_unverified, name='aadhar_mark_unverified'),
+    path('update_batch_details/<int:id>', views.update_batch_details, name='update_batch_details'),
 ]

@@ -270,6 +270,25 @@ def view_student(request, id, msg=''):
         return render(request, 'view_student.html', {'student': student, 'profile': profile, 'msg': msg})
     except:
         return render(request, 'login.html')
+    
+def update_batch_details(request,id):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        profile = Student.objects.get(id=id) 
+
+        if request.method == "POST":
+            profile.batch_name = request.POST['batch_name']
+            if request.POST['batch_start_date']:
+                profile.batch_start_date = request.POST['batch_start_date']
+            if request.POST['batch_end_date']:
+                profile.batch_end_date = request.POST['batch_end_date']
+            profile.save()
+
+        return render(request, 'update_batch_details.html', {'student': student,'profile':profile})
+    except:
+        return render(request, 'login.html')
 
 def forgot_password(request, id):
     try:
