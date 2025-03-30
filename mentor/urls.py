@@ -23,4 +23,6 @@ urlpatterns = [
     path('aadhar_mark_unverified/<int:id>', views.aadhar_mark_unverified, name='aadhar_mark_unverified'),
     path('batch_list/', views.batch_list, name='batch_list'),
     path('update_batch_details/<int:id>', views.update_batch_details, name='update_batch_details'),
+    path('fees_list/', views.fees_list, name='fees_list'),
+    path('update_fees_details/<int:id>', views.update_fees_details, name='update_fees_details'),
 ]

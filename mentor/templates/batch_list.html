@@ -43,6 +43,7 @@
           <div class="card-body">
             {% if msg %}
             <h4 class="card-title">{{msg}}</h4>
+            <h4 class="card-title">Total "<span style="color: rgb(78, 133, 216);">{{students.count}}</span>" results found</h4>
             {% else %}
             <h4 class="card-title">Student Batch Details</h4>
             {% endif %}

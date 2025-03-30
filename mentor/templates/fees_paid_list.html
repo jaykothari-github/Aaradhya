@@ -43,6 +43,7 @@
           <div class="card-body">
             {% if msg %}
             <h4 class="card-title">{{msg}}</h4>
+            <h4 class="card-title">Total "<span style="color: rgb(78, 133, 216);">{{students.count}}</span>" results found</h4>
             {% else %}
             <h4 class="card-title">All Fees Paid Students</h4>
             {% endif %}
@@ -63,7 +64,7 @@
                   <tr>
                     <td>{{one.id}}</td>
                     <td>
-                      <img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
+                      <img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"> <a href="{% url 'update_fees_details' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
                     </td>
                     <td> {{one.fees_paid}} / {{one.fees_amount}} </td>
                     <td> {{one.batch_name}} </td>

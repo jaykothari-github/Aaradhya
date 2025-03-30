@@ -279,10 +279,10 @@ def batch_list(request):
         
         if request.method == 'POST':
             search = request.POST.get('search')
-            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(mobile__icontains=search) | Q(batch_name__icontains=search)).order_by('id')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(mobile__icontains=search) | Q(batch_name__icontains=search)).order_by('batch_start_date')
             return render(request, 'batch_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
         
-        students = Student.objects.all()
+        students = Student.objects.all().order_by('batch_start_date')
         return render(request, 'batch_list.html', {'students': students, 'student': student})
     
     # except:
@@ -304,9 +304,49 @@ def update_batch_details(request,id):
                 profile.batch_end_date = request.POST['batch_end_date']
             profile.save()
 
+            return render(request, 'update_batch_details.html', {'student': student,'profile':profile,'msg':'Batch details updated successfully'})
         return render(request, 'update_batch_details.html', {'student': student,'profile':profile})
     except:
         return render(request, 'login.html')
+    
+def fees_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(fees_amount__icontains=search)).order_by('fees_status')
+            return render(request, 'fees_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.all().order_by('fees_status')
+        return render(request, 'fees_list.html', {'students': students, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+
+def update_fees_details(request,id):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        profile = Student.objects.get(id=id) 
+
+        if request.method == "POST":
+            if request.POST['fees_status'] == "True":
+                profile.fees_status = True
+            else:
+                profile.fees_status = False
+            profile.fees_amount = request.POST['fees_amount']
+            profile.fees_paid = request.POST['fees_paid']
+            profile.save()
+
+            return render(request, 'update_fees_details.html', {'student': student,'profile':profile, 'msg':"Fees Details updated Successfully"})
+        return render(request, 'update_fees_details.html', {'student': student,'profile':profile})
+    except:
+        return render(request, 'login.html')
+    
 
 def forgot_password(request, id):
     try:
