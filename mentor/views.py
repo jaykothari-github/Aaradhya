@@ -271,6 +271,24 @@ def view_student(request, id, msg=''):
     except:
         return render(request, 'login.html')
     
+def batch_list(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(mobile__icontains=search) | Q(batch_name__icontains=search)).order_by('id')
+            return render(request, 'batch_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        students = Student.objects.all()
+        return render(request, 'batch_list.html', {'students': students, 'student': student})
+    
+    # except:
+    #     return render(request, 'login.html')
+    
+
 def update_batch_details(request,id):
     try:
         student = Student.objects.get(email=request.session['email'])
