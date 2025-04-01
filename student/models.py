@@ -31,6 +31,7 @@ class Student(models.Model):
     fees_amount = models.IntegerField(default=0)
     fees_paid = models.IntegerField(default=0)
     fees_status = models.BooleanField(default=False)
+    fees_marker = models.CharField(max_length=30,blank=True,null=True)
     batch_name = models.CharField(max_length=30, blank=True, null=True, default='General')
     batch_start_date = models.DateField(blank=True, null=True)
     batch_end_date = models.DateField(blank=True, null=True)

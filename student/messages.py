@@ -6,7 +6,7 @@ We are pleased to welcome you to Aaradhya group. Your OTP for registration is "{
 
 Please enter this OTP to complete your registration.
 
-***Please do not share this OTP with anyone***
+*** Please do not share this OTP with anyone ***
 
 Thanks & Regards,
 Aaradhya group
@@ -20,7 +20,7 @@ Your account details are:
 Email: {student.email}
 Password: {student.password}
 
-***please keep your password safe and do not share with anyone***
+*** Please keep your password safe and do not share with anyone ***
 
 Thanks & Regards,
 Aaradhya group
@@ -32,3 +32,27 @@ Please keep it secure. \n\n
 Thanks & Regards, \n
 Aaradhya Group \
  """
+
+
+fees_paid_msg = """Hi {profile.first_name} {profile.last_name}!!
+
+!!!! Greetings From Aaradhya Group !!!
+
+This is to confirm that we have received your full payment for the Garba class fees. Thank you 
+for completing the payment!!
+
+We look forward to seeing you in class and hope you have a great time learning and dancing.
+
+Payment description is as follow:
+
+Your payable amount :  "{profile.fees_amount}/-"
+Your paid amount : "{profile.fees_paid}/-"
+Current Fees status : "Paid successfully"
+
+You can save this email as your fees receipt.
+
+*** Please check your fees status in your I-Card. It will be turn blue. If not then contact your admin ***
+
+Best Regards,
+Aaradhya Group
+"""

@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail
 from django.conf import settings
-from student.messages import forgot_password_msg
+from student.messages import forgot_password_msg, fees_paid_msg
 
 # Create your views here.
 
@@ -26,7 +26,7 @@ def login(request):
     return render(request, 'login.html')
 
 def index(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -47,8 +47,8 @@ def index(request):
                                               'all_verified': all_verified, 
                                               'aadhar_unverified': aadhar_unverified, 
                                               'profile_unverified': profile_unverified})
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
 
 
 def delete_profile(request, id):
@@ -168,7 +168,7 @@ def profile_image_verified_list(request):
     
 
 def profile_image_unverified_list(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -181,8 +181,8 @@ def profile_image_unverified_list(request):
         students = Student.objects.filter(profile_image_verified=False)
         return render(request, 'profile_image_unverified_list.html', {'students': students, 'student': student})
     
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
   
 
 def unlock_profile(request,id):
@@ -205,7 +205,7 @@ def lock_profile(request,id):
     return redirect('profile_image_unverified_list')
 
 def unverified_aadhar_list(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -218,12 +218,12 @@ def unverified_aadhar_list(request):
         students = Student.objects.filter(aadhar_verified=False)
         return render(request, 'unverified_aadhar_list.html', {'students': students, 'student': student})
     
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
 
 
 def verified_aadhar_list(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -236,8 +236,8 @@ def verified_aadhar_list(request):
         students = Student.objects.filter(aadhar_verified=True)
         return render(request, 'verified_aadhar_list.html', {'students': students, 'student': student})
     
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
 
 
 
@@ -272,7 +272,7 @@ def view_student(request, id, msg=''):
         return render(request, 'login.html')
     
 def batch_list(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -285,8 +285,8 @@ def batch_list(request):
         students = Student.objects.all().order_by('batch_start_date')
         return render(request, 'batch_list.html', {'students': students, 'student': student})
     
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
     
 
 def update_batch_details(request,id):
@@ -334,13 +334,22 @@ def update_fees_details(request,id):
         profile = Student.objects.get(id=id) 
 
         if request.method == "POST":
-            if request.POST['fees_status'] == "True":
-                profile.fees_status = True
-            else:
-                profile.fees_status = False
             profile.fees_amount = request.POST['fees_amount']
             profile.fees_paid = request.POST['fees_paid']
-            profile.save()
+            if request.POST['fees_status'] == "True":
+                profile.fees_status = True
+                profile.fees_marker = f"{student.first_name} {student.last_name}"
+                profile.save()
+                subject = "Greetings!!! Payment Received Successfully"
+                email_msg = fees_paid_msg.format(profile=profile)
+                email_list = list(Student.objects.filter(role="Sir").values_list('email',flat=True))
+                email_list.extend([profile.email,settings.EMAIL_HOST_USER])
+                print(email_list)
+                send_mail(subject, email_msg, settings.EMAIL_HOST_USER, email_list)
+
+            else:
+                profile.fees_status = False
+                profile.save()
 
             return render(request, 'update_fees_details.html', {'student': student,'profile':profile, 'msg':"Fees Details updated Successfully"})
         return render(request, 'update_fees_details.html', {'student': student,'profile':profile})
@@ -357,7 +366,6 @@ def forgot_password(request, id):
         subject = 'Password Recovery'
         message = forgot_password_msg.format(profile=profile)
         send_mail(subject, message, settings.EMAIL_HOST_USER, [profile.email])
-        # return render(request, 'view_student.html', {'student': student, 'profile': profile, 'msg': 'Password sent to the registered email'})
         return redirect('view_student', id=id, msg='Password sent to the registered email')
     except:
         return render(request, 'login.html')
