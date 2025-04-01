@@ -34,7 +34,7 @@ Aaradhya Group \
  """
 
 
-fees_paid_msg = """Hi {profile.first_name} {profile.last_name}!!
+fees_paid_msg = """Hi {profile.first_name} {profile.last_name}!! #{profile.id}
 
 !!!! Greetings From Aaradhya Group !!!
 

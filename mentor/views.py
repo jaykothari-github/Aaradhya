@@ -2,7 +2,7 @@ from django.shortcuts import render
 from student.models import Student
 from django.db.models import Q
 from django.shortcuts import redirect
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from student.messages import forgot_password_msg, fees_paid_msg
 
@@ -343,9 +343,10 @@ def update_fees_details(request,id):
                 subject = "Greetings!!! Payment Received Successfully"
                 email_msg = fees_paid_msg.format(profile=profile)
                 email_list = list(Student.objects.filter(role="Sir").values_list('email',flat=True))
-                email_list.extend([profile.email,settings.EMAIL_HOST_USER])
-                send_mail(subject, email_msg, settings.EMAIL_HOST_USER, email_list)
-
+                email_list.append(settings.EMAIL_HOST_USER)
+                email = EmailMessage(subject, email_msg, settings.EMAIL_HOST_USER, [profile.email])
+                email.cc = email_list
+                email.send()
             else:
                 profile.fees_status = False
                 profile.save()
