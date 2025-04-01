@@ -341,7 +341,7 @@ def update_fees_details(request,id):
                 profile.fees_marker = f"{student.first_name} {student.last_name}"
                 profile.save()
                 subject = "Greetings!!! Payment Received Successfully"
-                email_msg = fees_paid_msg.format(profile=profile)
+                email_msg = fees_paid_msg.format(profile=profile,student=student)
                 email_list = list(Student.objects.filter(role="Sir").values_list('email',flat=True))
                 email_list.append(settings.EMAIL_HOST_USER)
                 email = EmailMessage(subject, email_msg, settings.EMAIL_HOST_USER, [profile.email])

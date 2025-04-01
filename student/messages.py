@@ -45,9 +45,11 @@ We look forward to seeing you in class and hope you have a great time learning a
 
 Payment description is as follow:
 
-Your payable amount :  "{profile.fees_amount}/-"
-Your paid amount : "{profile.fees_paid}/-"
+Payable amount :  "{profile.fees_amount}/-"
+Paid amount : "{profile.fees_paid}/-"
 Current Fees status : "Paid successfully"
+
+Payment marked by: {student.first_name} {student.last_name}
 
 You can save this email as your fees receipt.
 
