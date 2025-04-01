@@ -344,7 +344,6 @@ def update_fees_details(request,id):
                 email_msg = fees_paid_msg.format(profile=profile)
                 email_list = list(Student.objects.filter(role="Sir").values_list('email',flat=True))
                 email_list.extend([profile.email,settings.EMAIL_HOST_USER])
-                print(email_list)
                 send_mail(subject, email_msg, settings.EMAIL_HOST_USER, email_list)
 
             else:

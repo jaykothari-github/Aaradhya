@@ -1,4 +1,4 @@
 myenv
-# media/aadhar/*
 # media/profile/*
 # media/profile_qr/*
+# db.sqlite3
