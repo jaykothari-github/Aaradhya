@@ -73,34 +73,38 @@
                     </div>
                 </div>
             </div><br>
-            <div class="row">
-              
+            <div class="row">              
               <div class="col-sm-6 center">
                   <div class="form-group">
                     <label for="name">Aadhaar no: <span style="color: red;">*</span></label>
                     <input type="tel" name="aadhar" minlength="12" maxlength="12" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Aadhaar numner..." class="form-control" id="mobile">
                   </div>
               </div>
-              
-              
             </div><br>
             
             <div class="row">
               <div class="col-sm-12 center">
                   <div class="form-group">
                     <label for="name">Class Rules: <span style="color: red; "> <label for="" style="font: italic small-caps bold 12px/30px Georgia, serif;;">Read & follow it</label> </span></label>
-                    <textarea name="" id="" rows="10" readonly class="form-control" style="background-color: rgb(152, 235, 152); color: red;">
-1. You must follow all the rules of the class.
-2. The students coming for Raas-Garba must not engage in any anti-social behavior once they enter the class. If they do, their admission will be terminated without any prior notice.
-3. Student are coming to learn Raas-Garba enters the class, he/she should not go out of the class until the class time is over. In special cases, you   can go after taking permission from sir/mam.    
-4. Smoking & Chewing Tobacco is prohibited in the class.
-5. The time for learning Raas-Garba will be from 8:00PM to 11:00PM, Students are requested to enter the class at the appointed time. Late entry will not be allowed.
-6. Student are coming to learn Raas-Garba should not stand outside the class after the class time is over.
-7. Student seeking admission must deposit the full fee within 3 days from the date of admission.
-8. The admission fee will not be transferred or refunded under any circumstances.
-9. The student coming to learn Raas-Garba should not bring any outsider to the class.
-                    </textarea>
-                    <!-- <input type="tel" name="aadhar" minlength="12" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Aadhaar numner..." class="form-control" id="mobile"> -->
+                    <div class="form-control-textarea" style="background-color:  rgb(152, 219, 235); border-radius: 20px; margin: 2%;" >
+                      <div style="padding-left: 2%; padding-right: 2%;">
+
+                        <p style="color: black;">
+ <br>&nbsp;&nbsp;<strong>1.</strong>  You must follow all the rules of the class.
+ <br>&nbsp;&nbsp; <strong style="color: red;">2. You have only one chance to fill out registration form with correct details. if management finds any incorrect details then student may have to pay penalty charges (50 Rs/change) to correct those details. </strong> 
+ <br>&nbsp;&nbsp;<strong>3.</strong> For Girls, Duppata is compulsory while come to class
+ <br>&nbsp;&nbsp;<strong>4.</strong> The students coming for Raas-Garba must not engage in any anti-social behavior once they enter the class. If they do, then their admission will be terminated without any prior notice.
+ <br>&nbsp;&nbsp;<strong>5.</strong> Student are coming to learn Raas-Garba enters the class, he/she should not go out of the class until the class time is over. In special cases, you   can go after taking permission from sir/mam.    
+ <br>&nbsp;&nbsp;<strong>6.</strong> Smoking & Chewing Tobacco is prohibited in the class.
+ <br>&nbsp;&nbsp;<strong>7.</strong> The time for learning Raas-Garba will be from <strong>8:00PM to 11:00PM,</strong> Students are requested to enter the class at the appointed time. Late entry will not be allowed.
+ <br>&nbsp;&nbsp;<strong>8.</strong> Student are coming to learn Raas-Garba should not stand outside the class after the class time is over.
+ <br>&nbsp;&nbsp;<strong>9.</strong> Student seeking admission must deposit the full fee within <strong>3 days</strong>  from the date of admission.
+ <br>&nbsp;&nbsp;<strong>10.</strong> The admission fee will not be transferred or refunded under any circumstances.
+ <br>&nbsp;&nbsp;<strong>11.</strong> The student coming to learn Raas-Garba should not bring any outsider to the class.
+                        </p><br>
+                      </div>
+
+                    </div>
                   </div>
               </div>
               
@@ -126,24 +130,5 @@
     <h1 class="title"></h1>
 </div>
 
-<script>
-  const profile_pic = document.getElementById("profile_pic");
-
-profile_pic.onchange = function() {
-    if(this.files[0].size > 2097152) {
-       alert("File is too big!");
-       this.value = "";
-    }
-};
-
-const aadhar_pic = document.getElementById("aadhar_pic");
-
-aadhar_pic.onchange = function() {
-    if(this.files[0].size > 2097152) {
-       alert("File is too big!");
-       this.value = "";
-    }
-};
-</script>
 
 {% endblock %}
