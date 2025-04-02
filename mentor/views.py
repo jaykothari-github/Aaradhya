@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
-from student.messages import forgot_password_msg, fees_paid_msg
+from student.messages import forgot_password_msg, fees_paid_msg, aadhar_verified_msg
 
 # Create your views here.
 
@@ -248,6 +248,13 @@ def aadhar_mark_verified(request,id):
         student.aadhar_verified_by = str(viewer.first_name + " " + viewer.last_name)
         student.aadhar_verified = True
         student.save()
+        subject = "Greetings!!! Aadhaar Card verified Successfully"
+        email_msg = aadhar_verified_msg.format(student=student,viewer=viewer)
+        email_list = list(Student.objects.filter(role="Sir").values_list('email',flat=True))
+        email_list.append(settings.EMAIL_HOST_USER)
+        email = EmailMessage(subject, email_msg, settings.EMAIL_HOST_USER, [student.email])
+        email.cc = email_list
+        email.send()
         return redirect('unverified_aadhar_list')
     return redirect('unverified_aadhar_list')
 

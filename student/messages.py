@@ -12,7 +12,7 @@ Thanks & Regards,
 Aaradhya group
 """
 
-welcome_msg = """Hi {student.first_name} {student.last_name}!!,
+welcome_msg = """Dear {student.first_name} {student.last_name}!!,  #{student.id}
 
 Your QR code is generated. Please find the attachment below. 
 
@@ -34,7 +34,7 @@ Aaradhya Group \
  """
 
 
-fees_paid_msg = """Hi {profile.first_name} {profile.last_name}!! #{profile.id}
+fees_paid_msg = """Dear {profile.first_name} {profile.last_name}!! #{profile.id}
 
 !!!! Greetings From Aaradhya Group !!!
 
@@ -54,6 +54,24 @@ Payment marked by: {student.first_name} {student.last_name}
 You can save this email as your fees receipt.
 
 *** Please check your fees status in your I-Card. It will be turn blue. If not then contact your admin ***
+
+Best Regards,
+Aaradhya Group
+"""
+
+aadhar_verified_msg = """Dear {student.first_name} {student.last_name}!! #{student.id}
+
+!!!! Greetings From Aaradhya Group !!!
+
+Your Aadhaar card has been successfully verified for your enrollment in the Garba class. We have 
+completed the verification process and everything is in order.
+
+You are all set to continue attending the classes without any issues. If you have any further 
+questions or need assistance, please feel free to reach out to us.
+
+Aadhaar Card verified by:- {viewer.first_name} {viewer.last_name}
+
+*** Please check your Aadhaar card status in your I-Card. It will be turn blue. If not then contact your admin ***
 
 Best Regards,
 Aaradhya Group
