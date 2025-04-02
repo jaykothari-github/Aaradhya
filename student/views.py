@@ -189,12 +189,12 @@ def logout(request):
 def icard_profile(request):
     try:
         email = request.GET.get('email')
-        student = Student.objects.get(email=email)
+        profile = Student.objects.get(email=email)
         try:
-            viewer = Student.objects.get(email=request.session['email'])
-            return render(request, 'student/icard_profile.html', {'student':student,'viewer':viewer})
+            student = Student.objects.get(email=request.session['email'])
+            return render(request, 'student/icard_profile.html', {'student':student,'profile':profile})
         except:
-            return render(request, 'student/icard_profile.html', {'student':student}) 
+            return render(request, 'student/icard_profile.html', {'profile':profile}) 
     except:
         return render(request, 'student/icard_profile.html', {'msg':'Invalid data!! Please try again!!'})
     
