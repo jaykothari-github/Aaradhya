@@ -94,7 +94,7 @@ def otp(request):
                 error_correction=qrcode.constants.ERROR_CORRECT_H
             )
 
-            url = f'https://markdjangopro1.pythonanywhere.com/icard_profile?email={student.email}'
+            url = f'https://aaradhyagroup.pythonanywhere.com/icard_profile?email={student.email}'
             # adding URL or text to QRcode
             QRcode.add_data(url)
 
