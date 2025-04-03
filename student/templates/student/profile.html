@@ -113,18 +113,13 @@
                         <span style="color: red;"> <i class="fa fa-times"></i> Not Verified </span>
                         {% endif %}    
                     </label>
+                    {% if student.aadhar_verified %}
                     <input type="tel" name="aadhar" readonly value="{{student.aadhar}}" minlength="12" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Aadhaar numner..." class="form-control" id="mobile">
+                    {% else %}
+                    <input type="tel" name="aadhar" value="{{student.aadhar}}" minlength="12" required style="background-color: rgb(152, 235, 152);" placeholder="Enter Your Aadhaar numner..." class="form-control" id="mobile">
+                    {% endif %}
                   </div>
               </div>
-              
-              <!-- <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="name">Aadhar Photo:</label>
-                    <input type="file" name="aadhar_pic" placeholder="Enter Your ..." style="background-color: rgb(152, 235, 152);" class="form-control" id="aadhar_pic">
-                    <p style="color: red; font-size: smaller; margin-left: 30px;">*Upload document less than 2 MB</p>
-                      
-                  </div>
-              </div> -->
               
           </div><br>
           

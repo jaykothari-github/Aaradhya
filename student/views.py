@@ -226,6 +226,7 @@ def profile(request):
                     student.password = request.POST['password']
                 else:
                     return render(request, 'student/profile.html', {'student':student, 'msg':'Password and Confirm Password are not same!!'})
+            student.aadhar = request.POST['aadhar']
             student.save()
             return render(request, 'student/profile.html', {'student':student, 'msg':'Profile updated successfully!!'})
         

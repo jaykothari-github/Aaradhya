@@ -73,7 +73,11 @@
                       
                     </td>
                     <td>
+                      {% if student.role == "Owner" %}
                       <a href="{% url 'unlock_profile' one.id %}"><label class="badge badge-gradient-info"> <i class="fa fa-edit"></i> Unlock Pic</label></a>
+                      {% else %}
+                      <label class="badge badge-gradient-info"> <i class="fa fa-edit"></i> Contact to Jay</label>
+                      {% endif %}
                     </td>
                   </tr>
                   {% endfor %}
