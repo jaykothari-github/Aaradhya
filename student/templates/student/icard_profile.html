@@ -52,7 +52,7 @@
                     </div>
                     
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">{{profile.first_name}} {{profile.last_name}} <br>Id: Aaradhya/General/{{profile.id}}</li>
+                      <li class="list-group-item">{{profile.first_name}} {{profile.last_name}} <br>Id: Aaradhya/{{profile.batch_name}}/{{profile.id}}</li>
                       <li class="list-group-item" {% if profile.fees_status and profile.profile_image_verified and profile.aadhar_verified %} style="border-color: rgb(50, 188, 243); border-radius: 5%; border-width: 5px;" {% else %} style="border-color: rgb(255, 0, 0); border-radius: 5%; border-width: 5px;" {% endif %} >
                         {% if profile.fees_status %}
                         <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Fees: {{profile.fees_paid}}/{{profile.fees_amount}}</i>
@@ -81,7 +81,7 @@
                       </li>
                       {% endif %}
                       <li class="list-group-item">
-                        Batch:- {% if profile.batch %} {{profile.batch}} {% else %} Pending {% endif %} <br>
+                        Batch:-{{profile.batch_name}} <br>
                         Starting Date:- {{profile.batch_start_date}} <br>
                         Ending Date:- {{profile.batch_end_date}} <br>
                       </li>
