@@ -72,7 +72,11 @@
                       {% endif %}
                       
                     </td>
+                    {% if one.verified and one.password_reset and one.profile_image_verified %}
                     <td><a href="{% url 'aadhar_mark_verified' one.id %}"> <label class="badge badge-gradient-info">Mark as Verified</label></a> </td>
+                    {% else %}
+-                    <td><label class="badge badge-gradient-danger">Incomplete Profile</label></td>
+-                   {% endif %}
                   </tr>
                   {% endfor %}
                 </tbody>
