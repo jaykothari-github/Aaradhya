@@ -76,3 +76,13 @@ Aadhaar Card verified by:- {viewer.first_name} {viewer.last_name}
 Best Regards,
 Aaradhya Group
 """
+
+unverified_accounts_warning_msg = """Dear Student,
+
+It has come to our notice that your account setup is still incomplete. We kindly request you to complete your account setup at the earliest to avoid any inconvenience.
+
+Note: Unverified accounts will be locked OR deleted after 3 days.
+
+Best Regards,
+Aaradhya Group
+"""

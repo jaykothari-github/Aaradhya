@@ -11,13 +11,6 @@
           <i class="mdi mdi-home"></i>
         </span> Dashboard
       </h3>
-      <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page">
-            <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-          </li>
-        </ul>
-      </nav>
     </div>
     <div class="row">
       <div class="col-md-4 stretch-card grid-margin">
@@ -97,8 +90,8 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Unverified Accounts</h4>
-            <label class="badge badge-warning"><i class="fa fa-warning"></i> Send Warning</label>
-            <label class="badge badge-danger"><i class="fa fa-warning"></i> Delete All Profiles</label>
+            <a href="{% url 'warn_unverified_students' %}"><label class="badge badge-warning"><i class="fa fa-warning"></i> Send Warning</label></a>
+            <a href="{% url 'delete_unverified_students' %}"><label class="badge badge-danger"><i class="fa fa-warning"></i> Delete All Profiles</label></a>
             <div class="table-responsive">
               <table class="table">
                 <thead>

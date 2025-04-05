@@ -25,4 +25,6 @@ urlpatterns = [
     path('update_batch_details/<int:id>', views.update_batch_details, name='update_batch_details'),
     path('fees_list/', views.fees_list, name='fees_list'),
     path('update_fees_details/<int:id>', views.update_fees_details, name='update_fees_details'),
+    path('warn_unverified_students/', views.warn_unverified_students, name='warn_unverified_students'),
+    path('delete_unverified_students/', views.delete_unverified_students, name='delete_unverified_students'),
 ]

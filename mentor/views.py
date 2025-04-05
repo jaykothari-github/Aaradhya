@@ -4,7 +4,8 @@ from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
-from student.messages import forgot_password_msg, fees_paid_msg, aadhar_verified_msg
+from student.messages import forgot_password_msg, fees_paid_msg, aadhar_verified_msg, unverified_accounts_warning_msg
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your views here.
 
@@ -36,7 +37,7 @@ def index(request):
         fees_pending = students.filter(fees_status=False).count()
         pending_verification = students.filter( Q(profile_image_verified=False) | Q(aadhar_verified=False)).exclude(verified=False).order_by('created_at')[:8]
         all_verified = students.filter(fees_status=True, verified=True, password_reset=True, profile_image_verified=True, aadhar_verified=True ).count() 
-        unverified_list = students.filter(Q(verified=False) | Q(password_reset=False)).order_by('created_at')
+        unverified_list = students.filter(Q(verified=False) | Q(password_reset=False)).order_by('first_name','created_at')
         aadhar_unverified = students.filter(aadhar_verified=False).count()
         profile_unverified = students.filter(profile_image_verified=False).count()
         return render(request, 'index.html', {'students_count': students_count, 
@@ -374,5 +375,35 @@ def forgot_password(request, id):
         message = forgot_password_msg.format(profile=profile)
         send_mail(subject, message, settings.EMAIL_HOST_USER, [profile.email])
         return redirect('view_student', id=id, msg='Password sent to the registered email')
+    except:
+        return render(request, 'login.html')
+
+def warn_unverified_students(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        students = list(Student.objects.filter(Q(verified=False) | Q(password_reset=False)).values_list('email', flat=True))
+        
+        subject = "Warning!!! Complete Your Account Setup"
+        message = unverified_accounts_warning_msg
+        send_mail(subject, message, settings.EMAIL_HOST_USER, students)
+        
+        return redirect('mentor-index')
+    except:
+        return render(request, 'login.html')
+    
+
+def delete_unverified_students(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        students = Student.objects.filter(verified=False)
+        students.delete()
+        
+        return redirect('mentor-index')
     except:
         return render(request, 'login.html')
