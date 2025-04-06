@@ -56,7 +56,7 @@
             <h4 class="font-weight-normal mb-3">Unverified Accounts<i class="mdi mdi-chart-line mdi-24px float-end"></i>
             </h4>
             <h2 class="mb-5"> {{unverified_list.count}}</h2>
-            <h6 class="card-text">View All</h6>
+            <a href="#unverified_accounts"><h6 class="card-text">View All</h6></a>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
     </div>
     
     <!-- Table for student list -->
-    <div class="row">
+    <div class="row" id="unverified_accounts">
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
@@ -96,7 +96,7 @@
             <div class="row">
               <div class="col-12">
                 <form action="delete_unverified_students" method="GET">
-                  <input type="submit" class="btn bg-gradient-danger" name="owner" value="Owner Delete All Unverified">
+                  <br><input type="submit" class="btn bg-gradient-danger" name="Owner" value="Owner Delete All Unverified">
                 </form>
               </div>
             </div>

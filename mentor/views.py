@@ -401,8 +401,12 @@ def delete_unverified_students(request):
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
         
-        students = Student.objects.filter(verified=False)
-        students.delete()
+        if request.GET.get('Owner'):
+            students = Student.objects.filter(Q(verified=False) | Q(password_reset=False))
+            students.delete()
+        else:
+            students = Student.objects.filter(verified=False)
+            students.delete()
         
         return redirect('mentor-index')
     except:
