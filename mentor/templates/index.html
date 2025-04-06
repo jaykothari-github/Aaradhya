@@ -92,6 +92,15 @@
             <h4 class="card-title">Unverified Accounts</h4>
             <a href="{% url 'warn_unverified_students' %}"><label class="badge badge-warning"><i class="fa fa-warning"></i> Send Warning</label></a>
             <a href="{% url 'delete_unverified_students' %}"><label class="badge badge-danger"><i class="fa fa-warning"></i> Delete All Profiles</label></a>
+            {% if student.role == "Owner" %}
+            <div class="row">
+              <div class="col-12">
+                <form action="delete_unverified_students" method="GET">
+                  <input type="submit" class="btn bg-gradient-danger" name="owner" value="Owner Delete All Unverified">
+                </form>
+              </div>
+            </div>
+            {% endif %}
             <div class="table-responsive">
               <table class="table">
                 <thead>
