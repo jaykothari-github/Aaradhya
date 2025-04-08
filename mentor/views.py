@@ -33,7 +33,7 @@ def index(request):
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
         
         students = Student.objects.all()
-        students_count = students.count() 
+        students_count = students.filter(role='Student').count() 
         fees_pending = students.filter(fees_status=False).count()
         pending_verification = students.filter( Q(profile_image_verified=False) | Q(aadhar_verified=False)).exclude(verified=False).order_by('created_at')[:8]
         all_verified = students.filter(fees_status=True, verified=True, password_reset=True, profile_image_verified=True, aadhar_verified=True ).count() 
@@ -71,10 +71,10 @@ def students_list(request):
         
         if request.method == 'POST':
             search = request.POST.get('search')
-            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search)).order_by('id')
+            students = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search) | Q(aadhar__icontains=search), role='Student').order_by('id')
             return render(request, 'students_list.html', {'students': students, 'student': student, 'msg': f'Search results for "{search}"' })
         
-        students = Student.objects.all()
+        students = Student.objects.filter(role='Student')
         return render(request, 'students_list.html', {'students': students, 'student': student})
     
     except:
