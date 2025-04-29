@@ -36,6 +36,7 @@ class Student(models.Model):
     batch_start_date = models.DateField(blank=True, null=True)
     batch_end_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    block  = models.BooleanField(default=False)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
