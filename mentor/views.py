@@ -411,3 +411,8 @@ def delete_unverified_students(request):
         return redirect('mentor-index')
     except:
         return render(request, 'login.html')
+    
+def unlock_all(request):
+    students = Student.objects.filter(block=True)
+    students.update(block=False)
+    return redirect('students_list')

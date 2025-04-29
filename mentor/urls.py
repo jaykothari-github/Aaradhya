@@ -27,4 +27,5 @@ urlpatterns = [
     path('update_fees_details/<int:id>', views.update_fees_details, name='update_fees_details'),
     path('warn_unverified_students/', views.warn_unverified_students, name='warn_unverified_students'),
     path('delete_unverified_students/', views.delete_unverified_students, name='delete_unverified_students'),
+    path('unlock_all/', views.unlock_all, name='unlock_all'),
 ]
