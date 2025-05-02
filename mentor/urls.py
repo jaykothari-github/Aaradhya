@@ -28,4 +28,5 @@ urlpatterns = [
     path('warn_unverified_students/', views.warn_unverified_students, name='warn_unverified_students'),
     path('delete_unverified_students/', views.delete_unverified_students, name='delete_unverified_students'),
     path('unlock_all/', views.unlock_all, name='unlock_all'),
+    path('fees_reminder/', views.fees_reminder, name='fees_reminder'),
 ]

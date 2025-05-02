@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
-from student.messages import forgot_password_msg, fees_paid_msg, aadhar_verified_msg, unverified_accounts_warning_msg
+from student.messages import *
 from django.contrib.auth.hashers import make_password, check_password
 
 # Create your views here.
@@ -416,3 +416,20 @@ def unlock_all(request):
     students = Student.objects.filter(block=True)
     students.update(block=False)
     return redirect('students_list')
+
+def fees_reminder(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        students = list(Student.objects.filter(fees_status=False).values_list('email', flat=True))
+        
+        subject = "Reminder!!! Fees Payment Pending"
+        email = EmailMessage(subject, fees_reminder_msg, settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER])
+        email.bcc = students
+        email.send()
+        
+        return redirect('fees_unpaid_list')
+    except:
+        return render(request, 'login.html')

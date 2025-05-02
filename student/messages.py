@@ -86,3 +86,15 @@ Note: Unverified accounts will be locked OR deleted after 3 days.
 Best Regards,
 Aaradhya Group
 """
+
+fees_reminder_msg = """Dear Student,
+
+We would like to remind you that your Garba class fees is still pending. 
+
+We kindly request you to complete the payment at your earliest convenience.
+
+Note: ***Late payments may incur additional charges.***
+
+Best Regards,
+Aaradhya Group
+"""
