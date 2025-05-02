@@ -3,6 +3,18 @@ from .models import *
 
 # Register your models here.
 
-@admin.register(Student)
-class ModelMember(admin.ModelAdmin):
+# @admin.register(Student)
+# class ModelMember(admin.ModelAdmin):
+#     list_display = ['first_name', 'last_name', 'id', 'email','aadhar','verified']
+
+@admin.action(description="block ID cards")
+def block_id(modeladmin, request, queryset):
+    queryset.update(block=True)
+
+class StudentAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'id', 'email','aadhar','verified']
+    list_filter = ['block']
+    search_fields = ['first_name', 'last_name', 'email','aadhar']
+    actions = [block_id]
+
+admin.site.register(Student, StudentAdmin)
