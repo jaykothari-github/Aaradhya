@@ -59,7 +59,7 @@
                   <tr>
                     <td>{{one.id}}</td>
                     <td>
-                      <img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
+                      <a href="{{one.profile_image.url}}" target="_blank"><img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"></a> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
                     </td>
                     <td> <a href="mailto:{{one.email}}">{{one.email}} </a></td>
                     <td> <a href="tel:+91{{one.mobile}}">{{one.mobile}}</a> </td>
