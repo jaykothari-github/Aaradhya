@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from random import randrange,choices
 import string
@@ -241,3 +241,16 @@ def icard(request):
         return render(request, 'student/icard.html', {'student':student})
     except:
         return render(request, 'student/login.html', {'msg':'Please login first!!'})
+
+def enquiry(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        mobile = request.POST['mobile']
+        
+        Enquiry.objects.create(
+            name = name,
+            mobile = mobile
+        )
+        
+    return redirect('index')
+

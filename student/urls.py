@@ -12,4 +12,5 @@ urlpatterns = [
     path('icard/', views.icard, name='icard'),
     path('password_reset/', views.password_reset, name='password_reset'),
     path('profile/', views.profile, name='profile'),
+    path('enquiry/', views.enquiry, name='enquiry'),
 ]

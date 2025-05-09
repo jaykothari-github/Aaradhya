@@ -22,3 +22,5 @@ class StudentAdmin(admin.ModelAdmin):
     actions = [block_id, unblock_id]
 
 admin.site.register(Student, StudentAdmin)
+
+admin.site.register(Enquiry)
