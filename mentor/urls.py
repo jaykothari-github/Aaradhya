@@ -29,4 +29,6 @@ urlpatterns = [
     path('delete_unverified_students/', views.delete_unverified_students, name='delete_unverified_students'),
     path('unlock_all/', views.unlock_all, name='unlock_all'),
     path('fees_reminder/', views.fees_reminder, name='fees_reminder'),
+    path('enquiry_list/', views.enquiry_list, name='enquiry_list'),
+    path('delete_enquiry/<int:id>', views.delete_enquiry, name='delete_enquiry'),
 ]

@@ -1,0 +1,82 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+          <i class="mdi mdi-home"></i>
+        </span>Enquiry Details
+      </h3>
+      
+    </div>
+
+    <!-- Search bar -->
+    <div class="row">
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Search</h4>
+            <form method="POST" action="{% url 'fees_list' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, mobile">
+              </div>
+              <button type="submit" class="btn btn-gradient-primary mr-2">Search</button>
+              <a href="{% url 'fees_list' %}" class="btn btn-gradient-info">Reset</a>
+            </form>
+          </div>
+    
+    <!-- Table for student list -->
+    <div class="row">
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            {% if msg %}
+            <h4 class="card-title">{{msg}}</h4>
+            <h4 class="card-title">Total "<span style="color: rgb(78, 133, 216);">{{students.count}}</span>" results found</h4>
+            {% else %}
+            <h4 class="card-title">All Enquiry Details</h4>
+            {% endif %}
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>                    
+                    <th> Name </th>
+                    <th> Mobile </th>
+                    <th> Action </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for one in enquiries %}
+                  <tr>
+                    <td>{{one.name}}</td>                    
+                    <td> {{one.mobile}} </td>
+                    <td> <a href="{% url 'delete_enquiry' one.id %}"><label for="" class="badge badge-danger">Delete</label></a></td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Table for student list -->
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+
+{% endblock %}

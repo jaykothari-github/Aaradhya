@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from student.models import Student
+from student.models import Student, Enquiry
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail, EmailMessage
@@ -431,5 +431,34 @@ def fees_reminder(request):
         email.send()
         
         return redirect('fees_unpaid_list')
+    except:
+        return render(request, 'login.html')
+    
+def enquiry_list(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            enquiries = Enquiry.objects.filter(Q(name__icontains=search) | Q(mobile__icontains=search)).order_by('id')
+            return render(request, 'enquiry_list.html', {'enquiries':enquiries, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        enquiries = Enquiry.objects.all()
+        return render(request, 'enquiry_list.html', {'enquiries':enquiries, 'student': student})
+    
+    except:
+        return render(request, 'login.html')
+    
+def delete_enquiry(request, id):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        enquiry = Enquiry.objects.get(id=id)
+        enquiry.delete()
+        return redirect('enquiry_list')
     except:
         return render(request, 'login.html')
