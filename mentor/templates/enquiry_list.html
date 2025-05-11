@@ -54,7 +54,7 @@
                   {% for one in enquiries %}
                   <tr>
                     <td>{{one.name}}</td>                    
-                    <td> {{one.mobile}} </td>
+                    <td>  <a href="tel:{{one.mobile}}">{{one.mobile}}</a> </td>
                     <td> <a href="{% url 'delete_enquiry' one.id %}"><label for="" class="badge badge-danger">Delete</label></a></td>
                     
                   </tr>
