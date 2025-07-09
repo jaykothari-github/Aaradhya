@@ -24,3 +24,22 @@ class StudentAdmin(admin.ModelAdmin):
 admin.site.register(Student, StudentAdmin)
 
 admin.site.register(Enquiry)
+
+
+class EventAdmin(admin.ModelAdmin):
+    list_display = ['title', 'date', 'time']
+    search_fields = ['title'] 
+
+admin.site.register(Event, EventAdmin)
+
+class Cricket_TeamAdmin(admin.ModelAdmin):
+    list_display = ['name', 'captain', 'dress_code']
+    search_fields = ['name', 'captain__first_name', 'captain__last_name']
+
+admin.site.register(Cricket_Team, Cricket_TeamAdmin)
+
+class Cricket_EventAdmin(admin.ModelAdmin):
+    list_display = ['event', 'player', 'team', 'fees_status']
+    search_fields = ['event', 'player__first_name', 'player__last_name', 'team__name']
+
+admin.site.register(Cricket_Event, Cricket_EventAdmin)

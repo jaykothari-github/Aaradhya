@@ -48,3 +48,49 @@ class Enquiry(models.Model):
 
     def __str__(self):
         return self.name
+    
+class StudentFeedback(models.Model):
+    # student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # def __str__(self):
+    #     return f"Feedback from {self.student.first_name} {self.student.last_name}"
+
+class Event(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    date = models.DateField()
+    day = models.CharField(max_length=10)
+    time = models.TimeField()
+    location = models.CharField(max_length=100)
+    location_link = models.URLField(blank=True, null=True)
+    charges = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    dress_code = models.CharField(max_length=50, blank=True, null=True)
+    event_image = models.FileField(upload_to='event_images/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+class Cricket_Team(models.Model):
+
+    name = models.CharField(max_length=50)
+    captain = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='team_captain')
+    dress_code = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name} - Captain: {self.captain.first_name} {self.captain.last_name}"
+     
+class Cricket_Event(models.Model):
+    
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    team = models.ForeignKey(Cricket_Team, on_delete=models.CASCADE, related_name='team')
+    player = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='player')
+    event_fees = models.IntegerField(default=0)
+    fees_status = models.BooleanField(default=False) 
+
+
+    def __str__(self):
+        return f"{self.event.title} - ({self.player.first_name} {self.player.last_name})" 
+    
