@@ -12,5 +12,6 @@ urlpatterns = [
     path('icard/', views.icard, name='icard'),
     path('password_reset/', views.password_reset, name='password_reset'),
     path('profile/', views.profile, name='profile'),
+    path('student_event_list/', views.student_event_list, name='student_event_list'),
     path('enquiry/', views.enquiry, name='enquiry'),
 ]

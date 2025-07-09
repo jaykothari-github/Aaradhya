@@ -1,0 +1,109 @@
+{% extends 'student/student-header.html' %}
+{% load static %}
+{% block content %}
+
+<div id="hero" class="hero overlay subpage-hero contact-hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1> ID-Card </h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <li class="breadcrumb-item active">ID-Card</li>
+            </ol>
+        </div><!-- /.hero-text -->
+    </div><!-- /.hero-content -->
+</div>
+
+<style>
+    .image-container {
+      width: 100%;   /* Full width of the container */
+      height: 300px; /* Set a fixed height or percentage of the container */
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;        /* Make image fill the width */
+      height: 100%;       /* Make image fill the height */
+      object-fit: cover;  /* Ensure the image covers the container */
+    }
+    .list-group {
+      text-align: center; /* Center all list items' text */
+    }
+  </style>
+
+<div class="row mt-10">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator" style="color: black; margin-top: 10%;">ID-Card</h2>
+        
+        {% if msg %}
+        <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+        <p class="text-center heading-separator" style="color: red;">Don't try to be oversmart!! you are under surveillance </p>
+        {% endif %}
+
+        {% if student and student.block ==  False %}
+        <div class="row">
+            <div class="col-sm-12" style="display: flex;
+            justify-content: center;  /* Centers content horizontally */
+            align-items: center;      /* Centers content vertically */">
+
+                <div class="card" style="width: 30rem;">
+                    <div class="image-container">
+                        <img src="{{student.profile_image.url}}" alt="Responsive Image">
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">{{student.first_name}} {{student.last_name}} <br>Id: Aaradhya/{{student.batch_name}}/{{student.id}}</li>
+                      <li class="list-group-item" {% if student.fees_status and student.profile_image_verified and student.aadhar_verified %} style="border-color: rgb(50, 188, 243); border-radius: 5%; border-width: 5px;" {% else %} style="border-color: rgb(255, 0, 0); border-radius: 5%; border-width: 5px;" {% endif %} >
+                        {% if student.fees_status %}
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Fees: {{student.fees_amount}}:{{student.fees_paid}}</i>
+                        {% else %}
+                        <i class="fa fa-times" style="color: red;"> Fees: {{student.fees_amount}}:{{student.fees_paid}}</i>
+                        {% endif %} <br>
+                        
+                        {% if student.profile_image_verified %}
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Profile Picture</i>
+                        {% else %}
+                        <i class="fa fa-times" style="color: red;"> Profile Picture Pending</i>
+                        {% endif %} <br>
+
+                        {% if student.aadhar_verified %}
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Aadhaar verified</i>
+                        {% else %}
+                        <i class="fa fa-times" style="color: red;"> Aadhaar not verified</i>
+                        {% endif %} <br> 
+
+                      </li>
+                      <li class="list-group-item">{{student.email}} <i class="fa fa-check" style="color: rgb(67, 252, 67);">Verified</i>
+                      <br>M:- {{student.mobile}}
+                      <br>Parent M:- {{student.parent_mobile}} <br>
+                      <br>Address:- {{student.address}}
+                      </li>
+                      
+                      <li class="list-group-item">
+                        Batch:- {{student.batch_name}} <br>
+                        Starting Date:- {{student.batch_start_date}} <br>
+                        Ending Date:- {{student.batch_end_date}} <br>
+                      </li>
+                    </ul>
+                    <div class="image-container">
+                      <img src="{{student.profile_qr.url}}" alt="Responsive Image">
+                  </div>
+                    <div class="card-body">
+                      <a href="#" class="card-link">Card link</a> <br>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+
+                </div>  
+
+            </div><br>
+        </div><br>
+        {% else %}
+        <h2 style="color: black;">Something went wrong :/</h2>
+        {% endif %}
+
+
+        
+    </div>
+</div>
+
+{% endblock %}

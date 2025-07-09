@@ -8,6 +8,7 @@ import qrcode
 from PIL import Image
 import os
 from . import messages
+from datetime import date
 
 # Create your views here.
 
@@ -254,3 +255,10 @@ def enquiry(request):
         
     return redirect('index')
 
+def student_event_list(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        events = Event.objects.filter(date__gte=date.today()).order_by('date')
+        return render(request, 'student/student_event_list.html', {'student':student, 'events':events})
+    # except:
+    #     return render(request, 'student/login.html', {'msg':'Please login first!!'})

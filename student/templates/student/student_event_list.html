@@ -1,0 +1,82 @@
+{% extends 'student/student-header.html' %}
+{% load static %}
+{% block content %}
+
+<div id="hero" class="hero overlay subpage-hero contact-hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1> Events </h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <li class="breadcrumb-item active">Events</li>
+            </ol>
+        </div><!-- /.hero-text -->
+    </div><!-- /.hero-content -->
+</div>
+
+
+<style>
+    .image-container {
+      width: 100%;   /* Full width of the container */
+      height: 300px; /* Set a fixed height or percentage of the container */
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;        /* Make image fill the width */
+      height: 100%;       /* Make image fill the height */
+      object-fit: cover;  /* Ensure the image covers the container */
+    }
+    .list-group {
+      text-align: center; /* Center all list items' text */
+    }
+  </style>
+
+<div class="row mt-10">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator" style="color: black; margin-top: 10%;">Event Timeline</h2>
+        
+        {% if msg %}
+        <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+        <p class="text-center heading-separator" style="color: red;">Don't try to be oversmart!! you are under surveillance </p>
+        {% endif %}
+
+        <div class="row">
+
+          <!-- Loop here -->
+          {% for event in events %}
+          <h3 style="color: rgb(235, 73, 73); padding-bottom: 2%;">-----------   {{event.date}} - {{event.day}}</h3>
+        <!-- <h3 class="text-center heading-separator" style="color: rgb(211, 110, 110); margin-top: 10%;">{{event.date}} - {{event.day}}</h3> -->
+
+            <div class="col-sm-12" style="display: flex;
+            justify-content: center;  /* Centers content horizontally */
+            align-items: center;      /* Centers content vertically */">
+                <div class="card" style="width: 30rem;">
+                  
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><h2 style="color: black;">{{event.title}}</h2></li>
+                      <li class="list-group-item">{{event.date}} - {{event.day}} <br> {{event.time}} Onwards</li>
+                      <li class="list-group-item"> Dress code :- {{event.dress_code}} </li>
+                      <li class="list-group-item"> Charges :- {{event.charges}} </li>
+                      <li class="list-group-item"> Details :- {{event.description}} </li>
+                      <li class="list-group-item"> -: Address :- <br> {{event.location}} <br> 
+                        {% if event.location_link %}
+                        <a href="{{event.location_link}}" style="color: red;">Click here to view in Map</a> 
+                        {% endif %}
+                      </li>
+                      <li class="list-group-item">
+                        <a href="">
+                          <button class="btn btn-primary" style="background-color: rgb(82, 192, 82); color: white;">View event ID card</button> 
+                        </a>
+                      </li>
+                      
+                    </ul>
+                </div>  
+
+            </div><br>
+          {% endfor %}
+            <!-- loop end -->
+        </div><br>     
+    </div>
+</div>
+{% endblock %}
