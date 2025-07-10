@@ -58,7 +58,11 @@
                       <li class="list-group-item">{{event.date}} - {{event.day}} <br> {{event.time}} Onwards</li>
                       <li class="list-group-item"> Dress code :- {{event.dress_code}} </li>
                       <li class="list-group-item"> Charges :- {{event.charges}} </li>
-                      <li class="list-group-item"> Details :- {{event.description}} </li>
+                      <li class="list-group-item"> Details :- <br>
+                        <textarea name="" id="" rows="5" cols="50" style="width: 100%; height: 100px; border: none; background-color: transparent; color: black; font-size: 16px; font-family: 'Courier New', Courier, monospace; resize: none;" readonly>
+                          {{event.description}}   
+                        </textarea>
+                      </li>
                       <li class="list-group-item"> -: Address :- <br> {{event.location}} <br> 
                         {% if event.location_link %}
                         <a href="{{event.location_link}}" style="color: red;">Click here to view in Map</a> 
