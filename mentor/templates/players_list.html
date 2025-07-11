@@ -20,13 +20,13 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Search</h4>
-            <form method="POST" action="">
+            <form method="POST" action="{% url 'players_list' %}">
               {% csrf_token %}
               <div class="form-group">
                 <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, mobile">
               </div>
               <button type="submit" class="btn btn-gradient-primary mr-2">Search</button>
-              <a href="" class="btn btn-gradient-info">Reset</a>
+              <a href="{% url 'players_list' %}" class="btn btn-gradient-info">Reset</a>
             </form>
           </div>
     
@@ -56,11 +56,11 @@
                 </thead>
                 <tbody>
                   
-                  {% for one_player in players %}
+                  {% for one in player %}
                   <tr>
                     <td>{{one.id}}</td>
                     <td>
-                      <a href="{{one.profile_image.url}}" target="_blank"><img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"></a> <a href="{% url 'view_student' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
+                      <a href="{{one.profile_image.url}}" target="_blank"><img src="{{one.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"></a> <a href="{% url 'add_cricketplayer' one.id %}">{{one.first_name}} {{one.last_name}}</a> 
                     </td>
                     <td> <a href="tel:+91{{one.mobile}}">{{one.mobile}}</a> </td>
                   </tr>
@@ -91,7 +91,7 @@
                   <tr>
                     <td>{{one_player.player.id}}</td>
                     <td>
-                      <a href="{{one_player.player.profile_image.url}}" target="_blank"><img src="{{one_player.player.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"></a> <a href="">{{one_player.player.first_name}} {{one_player.player.last_name}}</a> 
+                      <a href="{{one_player.player.profile_image.url}}" target="_blank"><img src="{{one_player.player.profile_image.url}}" style="object-fit: cover;" class="me-2" alt="image"></a> <a href="{% url 'add_cricketplayer' one_player.player.id %}">{{one_player.player.first_name}} {{one_player.player.last_name}}</a> 
                     </td>
                     <td> <a href="tel:+91{{one_player.player.mobile}}">{{one_player.player.mobile}}</a> </td>
                   </tr>

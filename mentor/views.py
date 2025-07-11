@@ -565,9 +565,51 @@ def players_list(request):
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
         
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            player = Student.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(mobile__icontains=search) | Q(email__icontains=search)).order_by('id')
+            return render(request, 'players_list.html', {'player': player, 'student': student, 'msg': f'Search results for "{search}"' })
+
         players = Cricket_Event.objects.all().order_by('team__name')
         cricket_teams = Cricket_Team.objects.all().order_by('name')
         return render(request, 'players_list.html', {'players': players, 'cricket_teams': cricket_teams , 'student': student})
     
+    # except:
+    #     return render(request, 'login.html')
+
+def add_cricketplayer(request, id):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        player = Student.objects.get(id=id)
+        teams = Cricket_Team.objects.all().order_by('name')
+        
+        team_detail = None
+        reg_msg = None
+        try:
+            team_detail = Cricket_Event.objects.get(player=player)
+        except:
+            reg_msg = "Player is not registered in any team"
+            # return render(request, 'add_cricketplayer.html', {'student': student, 'teams': teams, 'player': player, 'reg_msg': reg_msg})
+        if request.method == 'POST':
+            team = Cricket_Team.objects.get(id=request.POST['team'])
+            event = Event.objects.get(title__icontains=request.POST['event'])
+            
+            if team_detail == None:
+                team_detail = Cricket_Event.objects.create(
+                    player=player,
+                    team=team,
+                    event=event,
+                    event_fees = request.POST.get('event_fees', 200),
+                    fees_status = request.POST.get('fees_status', True),
+                )
+            else:
+                team_detail.team = team
+                team_detail.save()
+            return redirect('players_list')
+            # return render(request, 'add_cricketplayer.html', {'student': student, 'team_detail': team_detail, 'player': player, 'teams': teams , 'msg': 'Player added to team successfully'})
+        return render(request, 'add_cricketplayer.html', {'student': student, 'team_detail': team_detail, 'reg_msg': reg_msg, 'teams': teams, 'player': player})    
     # except:
     #     return render(request, 'login.html')
