@@ -1,0 +1,90 @@
+{% extends 'student/student-header.html' %}
+{% load static %}
+{% block content %}
+
+<div id="hero" class="hero overlay subpage-hero contact-hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1> Cricket ID-Card </h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+              <li class="breadcrumb-item active">Event - ID-Card</li>
+            </ol>
+        </div><!-- /.hero-text -->
+    </div><!-- /.hero-content -->
+</div>
+
+<style>
+    .image-container {
+      width: 100%;   /* Full width of the container */
+      height: 300px; /* Set a fixed height or percentage of the container */
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;        /* Make image fill the width */
+      height: 100%;       /* Make image fill the height */
+      object-fit: cover;  /* Ensure the image covers the container */
+    }
+    .list-group {
+      text-align: center; /* Center all list items' text */
+    }
+  </style>
+
+<div class="row mt-10">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center heading-separator" style="color: black; margin-top: 10%;">{{event.title}}</h2>
+        
+        {% if msg %}
+        <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+        <p class="text-center heading-separator" style="color: red;">Don't try to be oversmart!! you are under surveillance </p>
+        {% endif %}
+
+        {% if student_event_id and student.block ==  False %}
+        <div class="row">
+            <div class="col-sm-12" style="display: flex;
+            justify-content: center;  /* Centers content horizontally */
+            align-items: center;      /* Centers content vertically */">
+
+                <div class="card" style="width: 30rem;">
+                    <div class="image-container">
+                        <img src="{{student.profile_image.url}}" alt="Responsive Image">
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">{{student.first_name}} {{student.last_name}}</li>
+                      <li class="list-group-item" {% if student_event_id.fees_status %} style="border-color: rgb(50, 188, 243); border-radius: 5%; border-width: 5px;" {% else %} style="border-color: rgb(255, 0, 0); border-radius: 5%; border-width: 5px;" {% endif %} >
+                        {% if student_event_id.fees_status %}
+                        <i class="fa fa-check" style="color: rgb(50, 188, 243);"> Fees: {{student_event_id.event_fees}}</i>
+                        {% else %}
+                        <i class="fa fa-times" style="color: red;"> Fees: {{student_event_id.event_fees}}</i>
+                        {% endif %} <br>
+                        
+                      </li>
+                      <li class="list-group-item"> -:Team Details:- 
+                      <br>{{student_event_id.team.name}}
+                      <br>Captain:- {{student_event_id.team.captain}} 
+                      <br>Dress code:- {{student_event_id.team.dress_code}}
+                      </li>
+                      
+                      <li class="list-group-item">
+                        -:Other Team Members:-
+                        {% for one in team_mates %}
+                        <br>{{one.player}}
+                        {% endfor %}
+                      </li>
+                    </ul>
+                </div>  
+
+            </div><br>
+        </div><br>
+        {% else %}
+        <h2 style="color: rgb(247, 0, 0); padding: 10%;">Not Registered for this Event</h2>
+        {% endif %}
+
+
+        
+    </div>
+</div>
+
+{% endblock %}

@@ -34,12 +34,11 @@ admin.site.register(Event, EventAdmin)
 
 class Cricket_TeamAdmin(admin.ModelAdmin):
     list_display = ['name', 'captain', 'dress_code']
-    search_fields = ['name', 'captain__first_name', 'captain__last_name']
+    search_fields = ['name']
 
 admin.site.register(Cricket_Team, Cricket_TeamAdmin)
 
 class Cricket_EventAdmin(admin.ModelAdmin):
-    list_display = ['event', 'player', 'team', 'fees_status']
-    search_fields = ['event', 'player__first_name', 'player__last_name', 'team__name']
+    list_display = ['event', 'player', 'id', 'team', 'fees_status']
 
 admin.site.register(Cricket_Event, Cricket_EventAdmin)
