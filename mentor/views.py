@@ -558,3 +558,16 @@ def delete_event(request, id):
         return redirect('event_list')
     except:
         return render(request, 'login.html')
+
+def players_list(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        players = Cricket_Event.objects.all().order_by('team__name')
+        cricket_teams = Cricket_Team.objects.all().order_by('name')
+        return render(request, 'players_list.html', {'players': players, 'cricket_teams': cricket_teams , 'student': student})
+    
+    # except:
+    #     return render(request, 'login.html')
