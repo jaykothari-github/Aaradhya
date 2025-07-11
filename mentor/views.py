@@ -503,7 +503,7 @@ def add_event(request):
         return render(request, 'login.html')
 
 def event_list(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -516,11 +516,11 @@ def event_list(request):
         events = Event.objects.all().order_by('date')
         return render(request, 'event_list.html', {'events': events, 'student': student})
     
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
 
 def update_event(request, id):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -544,11 +544,11 @@ def update_event(request, id):
             return render(request, 'update_event.html', {'student': student, 'event': event, 'msg': 'Event updated successfully'})
         
         return render(request, 'update_event.html', {'student': student, 'event': event})
-    # except:
-    #     return render(request, 'login.html') 
+    except:
+        return render(request, 'login.html') 
 
 def delete_event(request, id):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -556,5 +556,5 @@ def delete_event(request, id):
         event = Event.objects.get(id=id)
         event.delete()
         return redirect('event_list')
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
