@@ -1,0 +1,99 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+          <i class="mdi mdi-home"></i>
+        </span> Add Event 
+      </h3>
+    </div>
+
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add Your Event</h4>
+          <form class="forms-sample" method="POST" action="{% url 'update_event' event.id %}">
+            {% csrf_token %}
+            {% if msg %}
+            <h3 class="text-center heading-separator" style="color: red;">{{msg}}</h3>
+            {% endif %}
+            <div class="form-group">
+              <label for="exampleInputName1">Event Name<i style="color: red;">*</i></label>
+              <input type="text" class="form-control" id="exampleInputName1" value="{{event.title}}" name="title" placeholder="Event Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleTextarea1">WhatsApp msg<i style="color: red;">*</i></label>
+              <textarea class="form-control" id="exampleTextarea1" name="description" rows="4">{{event.description}}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail3">Event Date<i style="color: red;">*</i></label>
+              <input type="text" onclick="text_con('date')" id="date" class="form-control" name="date" placeholder="{{event.date}}">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputName1">Day: (Ex: Monday, Tuesday,Wednesday...)<i style="color: red;">*</i></label>
+              <input type="text" class="form-control" id="" name="day" value="{{event.day}}" placeholder="Day">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputName1">Event Time<i style="color: red;">*</i></label>
+              <input type="text" class="form-control" onclick="text_con('time')" id="time" name="time" value="{{event.time}}" placeholder="Time">
+            </div>
+            <div class="form-group">
+              <label for="">Location<i style="color: red;">*</i></label>
+              <input type="text" class="form-control" id="" name="location" value="{{event.location}}" placeholder="Address">
+            </div>
+              <div class="form-group">
+              <label for="">Location Link <i style="color: red;">(Optional)</i></label>
+              <input type="text" class="form-control" id="" name="location_link" value="{{event.location_link}}" placeholder="Map link">
+            </div>
+              <div class="form-group">
+              <label for="">Charges <i style="color: red;">(Optional)</i></label>
+              <input type="number" class="form-control" id="" name="charges" value="{{event.charges}}" placeholder="Charges">
+            </div>
+              <div class="form-group">
+              <label for="exampleInputPassword4">Dress Code <i style="color: red;">(Optional)</i></label>
+              <input type="text" class="form-control" id="" name="dress_code" value="{{event.dress_code}}" placeholder="dress code...">
+            </div>
+            <!-- <div class="form-group">
+              <label for="exampleSelectGender">Gender</label>
+              <select class="form-select" id="exampleSelectGender">
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div> --> 
+            <button type="submit" class="btn btn-gradient-primary me-2">Modify Event</button>
+          </form>
+          <br><br>
+          <a href="{% url 'delete_event' event.id %}">
+            <button class="btn btn-gradient-danger">Delete Event</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+
+<script>
+  function text_con(id) {
+    if (id === 'time') {
+      document.getElementById(id).type = "time";
+    } else if (id === 'date') {
+      document.getElementById(id).type = "date";
+    } 
+  }
+</script>
+{% endblock %}

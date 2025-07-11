@@ -166,6 +166,40 @@
               </div>
             </li>
             <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#events" aria-expanded="false" aria-controls="charts">
+                <span class="menu-title">Events</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+              <div class="collapse" id="events">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_event' %}">Add Event</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'event_list' %}">Update/Delete Event</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#box" aria-expanded="false" aria-controls="charts">
+                <span class="menu-title">Cricket</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+              </a>
+              <div class="collapse" id="box">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="">Add Team member</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="">View</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'enquiry_list' %}" >
                 <span class="menu-title">Enquiries</span>
                 <i class="mdi mdi-chart-bar menu-icon"></i>

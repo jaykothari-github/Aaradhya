@@ -30,5 +30,9 @@ urlpatterns = [
     path('unlock_all/', views.unlock_all, name='unlock_all'),
     path('fees_reminder/', views.fees_reminder, name='fees_reminder'),
     path('enquiry_list/', views.enquiry_list, name='enquiry_list'),
+    path('add_event/', views.add_event, name='add_event'),
+    path('event_list/', views.event_list, name='event_list'),
+    path('update_event/<int:id>', views.update_event, name='update_event'),
+    path('delete_event/<int:id>', views.delete_event, name='delete_event'),
     path('delete_enquiry/<int:id>', views.delete_enquiry, name='delete_enquiry'),
 ]

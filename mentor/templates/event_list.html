@@ -9,7 +9,7 @@
       <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
           <i class="mdi mdi-home"></i>
-        </span>Enquiry Details
+        </span>Event List
       </h3>
       
     </div>
@@ -20,13 +20,13 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Search</h4>
-            <form method="POST" action="{% url 'enquiry_list' %}">
+            <form method="POST" action="{% url 'event_list' %}">
               {% csrf_token %}
               <div class="form-group">
                 <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, mobile">
               </div>
               <button type="submit" class="btn btn-gradient-primary mr-2">Search</button>
-              <a href="{% url 'enquiry_list' %}" class="btn btn-gradient-info">Reset</a>
+              <a href="{% url 'event_list' %}" class="btn btn-gradient-info">Reset</a>
             </form>
           </div>
     
@@ -39,23 +39,23 @@
             <h4 class="card-title">{{msg}}</h4>
             <h4 class="card-title">Total "<span style="color: rgb(78, 133, 216);">{{students.count}}</span>" results found</h4>
             {% else %}
-            <h4 class="card-title">All Enquiry Details</h4>
+            <h4 class="card-title">All Event Details</h4>
             {% endif %}
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>                    
+                    <th> Id </th>
                     <th> Name </th>
-                    <th> Mobile </th>
-                    <th> Action </th>
+                    <th> Date </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for one in enquiries %}
+                  {% for one in events %}
                   <tr>
-                    <td>{{one.name}}</td>                    
-                    <td>  <a href="tel:{{one.mobile}}">{{one.mobile}}</a> </td>
-                    <td> <a href="{% url 'delete_enquiry' one.id %}"><label for="" class="badge badge-danger">Delete</label></a></td>
+                    <td>{{one.id}}</td>                    
+                    <td><a href="{% url 'update_event' one.id %}">{{one.title}}</a></td>                    
+                    <td>  {{one.date}}</td>
                     
                   </tr>
                   {% endfor %}

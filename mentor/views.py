@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from student.models import Student, Enquiry
+from student.models import *
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.core.mail import send_mail, EmailMessage
@@ -462,3 +462,99 @@ def delete_enquiry(request, id):
         return redirect('enquiry_list')
     except:
         return render(request, 'login.html')
+
+def add_event(request):
+    try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            title = request.POST.get('title')
+            date = request.POST.get('date')
+            time = request.POST.get('time')
+            description = request.POST.get('description')
+            day = request.POST.get('day')
+            location = request.POST.get('location')
+            location_link = request.POST.get('location_link')
+            charges = request.POST.get('charges')
+            dress_code = request.POST.get('dress_code')
+            
+            event = Event.objects.create(
+                title=title,
+                date=date,
+                time=time,
+                description=description,
+                day=day,
+                location=location,
+            )
+
+            if location_link:
+                event.location_link = location_link
+            if charges:
+                event.charges = charges
+            if dress_code:
+                event.dress_code = dress_code
+            event.save()
+            return render(request, 'add_event.html', {'student': student, 'msg': 'Event added successfully'})
+        
+        return render(request, 'add_event.html', {'student': student})
+    except:
+        return render(request, 'login.html')
+
+def event_list(request):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        if request.method == 'POST':
+            search = request.POST.get('search')
+            events = Event.objects.filter(title__icontains=search).order_by('date')
+            return render(request, 'event_list.html', {'events': events, 'student': student, 'msg': f'Search results for "{search}"' })
+        
+        events = Event.objects.all().order_by('date')
+        return render(request, 'event_list.html', {'events': events, 'student': student})
+    
+    # except:
+    #     return render(request, 'login.html')
+
+def update_event(request, id):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        event = Event.objects.get(id=id)
+
+        if request.method == "POST":
+            event.title = request.POST['title']
+            if request.POST['date']:
+                event.date = request.POST['date']
+            if request.POST['time']:
+                event.time = request.POST['time']
+            event.description = request.POST['description']
+            event.day = request.POST['day']
+            event.location = request.POST['location']
+            event.location_link = request.POST.get('location_link', '')
+            event.charges = request.POST.get('charges', 0)
+            event.dress_code = request.POST.get('dress_code', '')
+
+            event.save()
+            return render(request, 'update_event.html', {'student': student, 'event': event, 'msg': 'Event updated successfully'})
+        
+        return render(request, 'update_event.html', {'student': student, 'event': event})
+    # except:
+    #     return render(request, 'login.html') 
+
+def delete_event(request, id):
+    # try:
+        student = Student.objects.get(email=request.session['email'])
+        if student.role == 'Student':
+            return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
+        
+        event = Event.objects.get(id=id)
+        event.delete()
+        return redirect('event_list')
+    # except:
+    #     return render(request, 'login.html')
