@@ -560,7 +560,7 @@ def delete_event(request, id):
         return render(request, 'login.html')
 
 def players_list(request):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -574,11 +574,11 @@ def players_list(request):
         cricket_teams = Cricket_Team.objects.all().order_by('name')
         return render(request, 'players_list.html', {'players': players, 'cricket_teams': cricket_teams , 'student': student})
     
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
 
 def add_cricketplayer(request, id):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         if student.role == 'Student':
             return render(request, 'login.html', {'msg': 'You are not authorized to access this page'})
@@ -611,5 +611,5 @@ def add_cricketplayer(request, id):
             return redirect('players_list')
             # return render(request, 'add_cricketplayer.html', {'student': student, 'team_detail': team_detail, 'player': player, 'teams': teams , 'msg': 'Player added to team successfully'})
         return render(request, 'add_cricketplayer.html', {'student': student, 'team_detail': team_detail, 'reg_msg': reg_msg, 'teams': teams, 'player': player})    
-    # except:
-    #     return render(request, 'login.html')
+    except:
+        return render(request, 'login.html')
