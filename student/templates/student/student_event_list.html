@@ -68,11 +68,19 @@
                         <a href="{{event.location_link}}" style="color: red;">Click here to view in Map</a> 
                         {% endif %}
                       </li>
+                      {% if event.event_image %}
+                      <li class="list-group-item">
+                        <a href="{{ event.event_image.url }}" target="_blank" class="image-container">
+                          <button class="btn btn-primary" style="background-color: rgb(82, 192, 82); color: white;">{{event.event_image_alt_text}}</button> 
+                        </a>
+                      </li>
+                      {% endif %}
                       <li class="list-group-item">
                         <a href="{% url 'event_id_card' event.id %}">
                           <button class="btn btn-primary" style="background-color: rgb(82, 192, 82); color: white;">View event ID card</button> 
                         </a>
                       </li>
+                      
                       
                     </ul>
                 </div>  

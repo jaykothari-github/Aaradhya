@@ -264,13 +264,17 @@ def student_event_list(request):
         return render(request, 'student/login.html', {'msg':'Please login first!!'})
     
 def event_id_card(request, id):
-    # try:
+    try:
         student = Student.objects.get(email=request.session['email'])
         event = Event.objects.get(id=id)
         if event.title.strip() == 'Box Cricket':
-            student_event_id = Cricket_Event.objects.filter(player=student, event=event).first()
+            try:
+                student_event_id = Cricket_Event.objects.get(player=student, event=event)
+            except:
+                return render(request, 'student/cricket_idcard.html', {'student':student, 'event':event})
+
             team_mates = Cricket_Event.objects.filter(event=event,  team=student_event_id.team).exclude(player=student)
             return render(request, 'student/cricket_idcard.html', {'student':student, 'team_mates': team_mates, 'event':event, 'student_event_id':student_event_id})
         return render(request, 'student/event_icard.html', {'student':student, 'event':event})
-    # except:
-    #     return render(request, 'student/login.html', {'msg':'Please login first!!'})
+    except:
+        return render(request, 'student/login.html', {'msg':'Please login first!!'})
